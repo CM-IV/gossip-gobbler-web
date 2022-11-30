@@ -1,0 +1,62 @@
+@layout('layouts/mainLayout')
+@set('title', 'Login')
+
+@section('body')
+    <div class="columns is-centered">
+        <div class="column is-half">
+            <div class="box mt-6">
+                <p class="title">Login</p>
+                @if(flashMessages.has('errors'))
+                    <div class="notification is-danger">
+                        <button class="delete"></button>
+                        <p>{{ flashMessages.get('errors.title') }}</p>
+                    </div>
+                @end
+                <form action="{{ route('auth.login') }}" method="POST">
+                    {{ csrfField() }}
+                    <div class="field">
+                        <label class="label">Username or Email</label>
+                        <div class="control">
+                        <input
+                            class="input"
+                            name="uid"
+                            type="text"
+                            placeholder="Username or Email"
+                            required
+                        />
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Password</label>
+                        <div class="control">
+                            <input
+                                class="input"
+                                name="password"
+                                type="password"
+                                placeholder="Password"
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="item">
+                            <p>Need an account? <a href="register">Register</a></p>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="item">
+                            <div class="loginButton">
+                                <button class="button is-primary" type="submit">
+                                Sign in
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@end

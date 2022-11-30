@@ -1,0 +1,78 @@
+@layout('layouts/mainLayout')
+@set('title', 'Register')
+
+@section('body')
+    <main>
+        <div class="columns is-centered">
+            <div class="column is-half">
+                <div class="box mt-6">
+                    <p class="title">Register</p>
+                    <form action="{{ route('auth.register') }}" method="POST">
+                        {{ csrfField() }}
+                        <div class="field">
+                            <label class="label">Email</label>
+                            <div class="control">
+                                <input
+                                    class="input"
+                                    name="email"
+                                    type="email"
+                                    placeholder="Email"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Username</label>
+                            <div class="control">
+                                <input
+                                    class="input"
+                                    type="text"
+                                    name="username"
+                                    placeholder="Username"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Password</label>
+                            <div class="control">
+                                <input
+                                    class="input"
+                                    type="password"
+                                    name="password"
+                                    placeholder="Password"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Confirm Password</label>
+                            <div class="control">
+                                <input
+                                    class="input"
+                                    name="passwordConfirmation"
+                                    type="password"
+                                    placeholder="Password"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="item">
+                                <div class="loginButton">
+                                    <button class="button is-primary" type="submit">
+                                    Sign up
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+@end

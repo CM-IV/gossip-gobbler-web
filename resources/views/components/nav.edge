@@ -1,0 +1,20 @@
+<nav class="navbar is-hidden-fullhd is-hidden-widescreen is-hidden-desktop" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a href="/" class="navbar-item">
+        <strong>Gossip Gobbler</strong>
+        </a>
+    </div>
+
+    <input type="checkbox" id="navbar-burger-toggle" class="navbar-burger-toggle is-hidden" />
+    <label for="navbar-burger-toggle" class="navbar-burger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </label>
+
+    <div id="navMenu" class="navbar-menu is-mobile">
+        <div class="navbar-start">
+            {{{ await $slots.links() }}}
+        </div>
+    </div>
+</nav>

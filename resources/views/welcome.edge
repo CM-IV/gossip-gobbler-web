@@ -1,0 +1,43 @@
+@layout('layouts/mainLayout')
+@set('title', 'Gossip Gobbler')
+
+@section('body')
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="columns is-vcentered">
+          <div class="column is-half">
+            <h1 class="title"><span class="text-gradient">Gossip </span>Gobbler</h1>
+            @if(auth.user)
+              <div class="content is-hidden-mobile is-hidden-tablet-only">
+                <div class="buttons">
+                    <a href="dashboard" class="button is-rounded is-success">
+                        Dashboard
+                    </a>
+                    <a class="button is-rounded is-danger" href="{{ route('auth.logout') }}">Logout</a>
+                </div>
+              </div>
+            @else
+              <div class="content is-hidden-mobile is-hidden-tablet-only">
+                <div class="buttons">
+                    <a href="/register" class="button is-rounded is-success">
+                        Sign Up
+                    </a>
+                    <a href="/login" class="button is-rounded is-info">
+                        Log in
+                    </a>
+                </div>
+              </div>
+            @end
+          </div>
+          <div class="column is-half">
+              <figure>
+                <img src="https://ik.imagekit.io/xbkhabiqcy9/img/oskar-yildiz-cOkpTiJMGzA-unsplash_iNLe4XuI4.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1669480510560" alt="Greeting Image" height={480} width={480} />
+                <p class="is-size-7">Photo: Unsplash <a href="https://unsplash.com/photos/cOkpTiJMGzA?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink">Oskar Yildiz</a></p>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+@end

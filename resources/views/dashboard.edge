@@ -1,0 +1,59 @@
+@layout('layouts/mainLayout')
+@set('title', 'Dashboard')
+
+@section('body')
+  <main>
+      @if(auth.user?.isAdmin)
+        <section class="section">
+          <h1 class="title">Welcome Admin {{ auth.user?.username }}!</h1>
+        </section>
+        <section class="section">
+          <div class="columns is-vcentered">
+            <div class="column is-one-quarter">
+              @component('components/menu')
+                @slot('links')
+                <p class="menu-label">
+                  Admin
+                </p>
+                <ul class="menu-list">
+                  <li><a href="{{ route('users.manage') }}" aria-current="page">Manage Users</a></li>
+                </ul>
+                <p class="menu-label">
+                  Navigation
+                </p>
+                <ul class="menu-list">
+                  <li><a href="/">Home</a></li>
+                  <li><a href="dashboard">Dashboard</a></li>
+                  <li><a href="{{ route('auth.logout') }}">Logout</a></li>
+                </ul>
+                @end
+              @end
+            </div>
+            <div class="column"></div>
+          </div>
+        </section>
+      @else
+        <section class="section">
+          <h1 class="title">Welcome {{ auth.user?.username }}!</h1>
+        </section>
+        <section class="section">
+          <div class="columns is-vcentered">
+            <div class="column is-one-quarter">
+              @component('components/menu')
+                @slot('links')
+                <p class="menu-label">
+                  Navigation
+                </p>
+                <ul class="menu-list">
+                  <li><a href="/">Home</a></li>
+                  <li><a href="{{ route('auth.logout') }}">Logout</a></li>
+                </ul>
+                @end
+              @end
+            </div>
+            <div class="column"></div>
+          </div>
+        </section>
+      @end
+  </main>
+@end

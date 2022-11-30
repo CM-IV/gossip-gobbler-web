@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Gossip Gobbler</title>
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/app.css') }}">  
+    </head>
+    <body>
+        @component('components/nav')
+            @slot('links')
+                @if(auth.user)
+                    <a href="/" class="navbar-item">
+                        Home
+                    </a>
+                    @if(auth.user?.isAdmin)
+                        <a class="navbar-item" href="{{ route('users.manage') }}" aria-current="page">Manage Users</a>
+                    @end
+                    <a href="dashboard" class="navbar-item">
+                        Dashboard
+                    </a>
+                    <a class="navbar-item" href="{{ route('auth.logout') }}">Logout</a>
+                @else
+                    <a href="/" class="navbar-item">Home</a>
+                    <a href="/register" class="navbar-item">
+                        Sign Up
+                    </a>
+                    <a href="/login" class="navbar-item">
+                        Log in
+                    </a>
+                @end
+            @end
+        @end
+        <div class="columns is-centered">
+            <div class="column is-full">
+                @!section('body')
+                <div class="container">
+                    <footer class="footer">
+                        <div class="columns is-centered">
+                            <div class="column">
+                                <figure class="image is-32x32">
+                                    <a href="https://github.com/CM-IV">
+                                        <img src="https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons@master/png/github.png" alt="github image" />
+                                    </a>
+                                </figure>
+                            </div>
+                            <div class="column">
+                                <div class="content has-text-centered">
+                                    <p>
+                                    <strong>Gossip Gobbler</strong> by <a href="https://home.cvidev.xyz">CM-IV</a>.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="column"></div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
