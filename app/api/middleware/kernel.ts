@@ -23,7 +23,7 @@ import Server from '@ioc:Adonis/Core/Server'
 Server.middleware.register([
     () => import('@ioc:Adonis/Core/BodyParser'),
     () => import('@ioc:Adonis/Addons/Shield'),
-    () => import('App/api/middleware/SilentAuth')
+    () => import('../middleware/SilentAuth')
 ])
 
 /*
@@ -43,6 +43,6 @@ Server.middleware.register([
 |
 */
 Server.middleware.registerNamed({
-    auth: () => import('App/api/middleware/Auth'),
-    role: () => import('App/api/middleware/Role')
+    auth: () => import('../middleware/Auth'),
+    role: () => import('../middleware/Role')
 })

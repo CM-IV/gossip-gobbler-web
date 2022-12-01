@@ -7,8 +7,8 @@
             <div class="box mt-6">
                 <p class="title">Login</p>
                 @if(flashMessages.has('errors'))
-                    <div class="notification is-danger">
-                        <button class="delete"></button>
+                    <div id="notify" class="notification is-danger">
+                        <button class="delete" onclick="this.parentNode.style.display='none'"></button>
                         <p>{{ flashMessages.get('errors.title') }}</p>
                     </div>
                 @end

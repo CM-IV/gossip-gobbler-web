@@ -5,15 +5,21 @@ import Role from '../models/Role'
 import User from '../models/User'
 
 export default class UsersController {
-    public async manage({ view }: HttpContextContract) {
+    public async manage({ request, view }: HttpContextContract) {
+
+        const page = request.input("page", 1);
 
         const users = await User.query()
             .orderBy('username')
+            .paginate(page, 8)
 
         const roles = await Role.query()
             .orderBy('role')
 
-        return view.render('admin/manage', { users, roles })
+        return view.render('admin/manage', { 
+            users: users.serialize(),
+            roles: roles
+        })
     }
 
     public async mutateRole({ request, response, params, auth }: HttpContextContract) {

@@ -9,20 +9,20 @@
   ],
   "compilerOptions": {
     "outDir": "build",
-    "rootDir": "./",
+    "rootDir": ".",
     "sourceMap": true,
     "paths": {
       "App/*": [
-        "./app/*"
+        "app/*"
       ],
       "Config/*": [
-        "./config/*"
+        "config/*"
       ],
       "Contracts/*": [
-        "./contracts/*"
+        "contracts/*"
       ],
       "Database/*": [
-        "./database/*"
+        "database/*"
       ]
     },
     "types": [

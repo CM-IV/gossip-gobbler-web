@@ -6,7 +6,7 @@
         <h1 class="title">Manage Users</h1>
     </section>
     <section class="section">
-        <div class="columns is-vcentered">
+        <div class="columns is-centered">
             <div class="column is-one-quarter">
               @component('components/menu')
                 @slot('links')
@@ -41,7 +41,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @each(user in users)
+                                @each(user in users.data)
                                 <tr>
                                     <td>
                                         {{ user.username }}
@@ -55,7 +55,7 @@
                                             <div class="select">
                                                 <select name="roleId" onchange="this.form.submit()">
                                                 @each(role in roles)
-                                                    <option value="{{ role.id }}" {{ role.id === user.roleId ? "selected" : "" }}>
+                                                    <option value="{{ role.id }}" {{ role.id === user.role_id ? "selected" : "" }}>
                                                         {{ role.role }}
                                                     </option>
                                                 @end
@@ -64,7 +64,8 @@
                                         </form>
                                     </td>
                                     <td>{{ user.email }}</td>
-                                    <td>{{ user.createdAt.toLocaleString() }}</td>
+                                    @set('date', new Date(user.created_at))
+                                    <td>{{ date.toDateString() }}</td>
                                     <td>
                                         <form action="{{ route('destroy', { id: user.id }, { qs: { _method: 'DELETE' } }) }}" method="post">
                                             {{ csrfField() }}
@@ -78,6 +79,9 @@
                             </tbody>
                         </table>
                     </div>
+                    @if(users.meta.total > users.meta.per_page)
+                        @!component('components/paginator', pagination = users)
+                    @end
                 </div>
             </div>
         </div>
