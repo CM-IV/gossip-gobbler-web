@@ -13,7 +13,7 @@ const prometheusConfig: PrometheusConfig = {
   | Endpoint to GET prometheus metrics.
   |--------------------------------------------------------------------------
   */
-  endpoint: '/api/metrics',
+  endpoint: '/metrics',
 
   /*
   |--------------------------------------------------------------------------

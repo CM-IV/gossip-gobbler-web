@@ -35,7 +35,7 @@ Route.group(() => {
   Route.delete('/:id', 'UsersController.destroy').as('destroy').middleware(['auth', 'role:admin'])
   Route.patch('/:id/role', 'UsersController.mutateRole')
     .as('role')
-    .middleware(['auth', 'role:admin'])
+    .middleware(['auth', 'role:admin'])  
 
   //Health check
   Route.get('health', async ({ response }) => {
