@@ -21,21 +21,21 @@ Route.get('dashboard', async ({ view }) => {
 Route.get('manage', 'UsersController.manage').as('users.manage').middleware(['auth', 'role:admin'])
 Route.get('register', async ({ view }) => {
   return view.render('auth/register')
-})
+}).middleware('guest')
 Route.get('login', async ({ view }) => {
   return view.render('auth/login')
-})
+}).middleware('guest')
 
 //API ROUTES
 Route.group(() => {
-  Route.post('register', 'AuthController.register').as('auth.register')
-  Route.post('login', 'AuthController.login').as('auth.login')
+  Route.post('register', 'AuthController.register').as('auth.register').middleware('guest')
+  Route.post('login', 'AuthController.login').as('auth.login').middleware('guest')
 
   Route.get('logout', 'AuthController.logout').as('auth.logout').middleware('auth')
   Route.delete('/:id', 'UsersController.destroy').as('destroy').middleware(['auth', 'role:admin'])
   Route.patch('/:id/role', 'UsersController.mutateRole')
     .as('role')
-    .middleware(['auth', 'role:admin'])  
+    .middleware(['auth', 'role:admin']) 
 
   //Health check
   Route.get('health', async ({ response }) => {
