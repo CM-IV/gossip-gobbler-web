@@ -8,7 +8,7 @@
           <h1 class="title">Welcome Admin {{ auth.user?.username }}!</h1>
         </section>
         <section class="section">
-          <div class="columns is-centered">
+          <div class="columns">
             <div class="column is-one-quarter">
               @component('components/menu')
                 @slot('links')
@@ -29,7 +29,29 @@
                 @end
               @end
             </div>
-            <div class="column"></div>
+            <div class="column">
+              <div class="columns is-centered">
+                <div class="column is-three-fifths">
+                  <div class="card">
+                    <div class="card-content">
+                      <div class="field">
+                        <label class="label">Username</label>
+                        <p>{{ auth.user?.username }}</p>
+                      </div>
+                      <div class="field">
+                        <label class="label">Email</label>
+                        <p>{{ auth.user?.email }}</p>
+                      </div>
+                      <div class="field">
+                        <label class="label">Date Joined</label>
+                        @set('date', new Date(auth.user?.createdAt))
+                        <p>{{ date.toDateString() }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       @else
@@ -37,7 +59,7 @@
           <h1 class="title">Welcome {{ auth.user?.username }}!</h1>
         </section>
         <section class="section">
-          <div class="columns is-vcentered">
+          <div class="columns">
             <div class="column is-one-quarter">
               @component('components/menu')
                 @slot('links')
@@ -52,8 +74,25 @@
                 @end
               @end
             </div>
-            <div class="column"></div>
-          </div>
+            <div class="column">
+              <div class="card">
+                <div class="card-content">
+                  <div class="field">
+                    <label class="label">Username</label>
+                    <p>{{ auth.user?.username }}</p>
+                  </div>
+                  <div class="field">
+                    <label class="label">Email</label>
+                    <p>{{ auth.user?.email }}</p>
+                  </div>
+                  <div class="field">
+                    <label class="label">Date Joined</label>
+                    @set('date', new Date(auth.user?.createdAt))
+                    <p>{{ date.toDateString() }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
         </section>
       @end
   </main>
