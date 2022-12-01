@@ -1,53 +1,47 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { schema, rules } from "@ioc:Adonis/Core/Validator"
+import { schema, rules } from '@ioc:Adonis/Core/Validator'
 import Roles from '../enums/Role'
 import Role from '../models/Role'
 import User from '../models/User'
 
 export default class UsersController {
-    public async manage({ request, view }: HttpContextContract) {
+  public async manage({ request, view }: HttpContextContract) {
+    const page = request.input('page', 1)
 
-        const page = request.input("page", 1);
+    const users = await User.query().orderBy('username').paginate(page, 8)
 
-        const users = await User.query()
-            .orderBy('username')
-            .paginate(page, 8)
+    const roles = await Role.query().orderBy('role')
 
-        const roles = await Role.query()
-            .orderBy('role')
+    return view.render('admin/manage', {
+      users: users.serialize(),
+      roles: roles,
+    })
+  }
 
-        return view.render('admin/manage', { 
-            users: users.serialize(),
-            roles: roles
-        })
-    }
+  public async mutateRole({ request, response, params, auth }: HttpContextContract) {
+    const roleSchema = schema.create({
+      roleId: schema.number([rules.exists({ table: 'roles', column: 'id' })]),
+    })
 
-    public async mutateRole({ request, response, params, auth }: HttpContextContract) {
-        const roleSchema = schema.create({
-            roleId: schema.number([rules.exists({ table: "roles", column: "id" })])
-        })
+    const payload = await request.validate({ schema: roleSchema })
 
-        const payload = await request.validate({ schema: roleSchema })
+    const user = await User.findOrFail(params.id)
 
-        const user = await User.findOrFail(params.id)
+    const isAuthUser = user.id === auth.user?.id
 
-        const isAuthUser = user.id === auth.user?.id
+    await user.merge(payload).save()
 
-        await user.merge(payload).save()
+    return isAuthUser && user.roleId !== Roles.ADMIN
+      ? response.redirect('/')
+      : response.redirect().back()
+  }
 
-        return isAuthUser && user.roleId !== Roles.ADMIN
-        ?   response.redirect("/")
-        :   response.redirect().back()
-    }
+  public async destroy({ response, params, auth }: HttpContextContract) {
+    const user = await User.findOrFail(params.id)
+    const isAuthUser = user.id === auth.user?.id
 
-    public async destroy({ response, params, auth }: HttpContextContract) {
-        const user = await User.findOrFail(params.id)
-        const isAuthUser = user.id === auth.user?.id
+    await user.delete()
 
-        await user.delete()
-
-        return isAuthUser
-        ?   response.redirect("/")
-        :   response.redirect().back()
-    }
+    return isAuthUser ? response.redirect('/') : response.redirect().back()
+  }
 }

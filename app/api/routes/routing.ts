@@ -26,21 +26,21 @@ Route.get('login', async ({ view }) => {
   return view.render('auth/login')
 })
 
-
 //API ROUTES
 Route.group(() => {
-
   Route.post('register', 'AuthController.register').as('auth.register')
   Route.post('login', 'AuthController.login').as('auth.login')
 
   Route.get('logout', 'AuthController.logout').as('auth.logout').middleware('auth')
   Route.delete('/:id', 'UsersController.destroy').as('destroy').middleware(['auth', 'role:admin'])
-  Route.patch('/:id/role', 'UsersController.mutateRole').as('role').middleware(['auth', 'role:admin'])
-  
+  Route.patch('/:id/role', 'UsersController.mutateRole')
+    .as('role')
+    .middleware(['auth', 'role:admin'])
+
   //Health check
   Route.get('health', async ({ response }) => {
-    const report = await HealthCheck.getReport();
+    const report = await HealthCheck.getReport()
 
-    return report.healthy ? response.ok(report) : response.badRequest(report);
-  });
-}).prefix('/api');
+    return report.healthy ? response.ok(report) : response.badRequest(report)
+  })
+}).prefix('/api')
