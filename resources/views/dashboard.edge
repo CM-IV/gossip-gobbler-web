@@ -10,22 +10,22 @@
         <section class="section">
           <div class="columns">
             <div class="column is-one-quarter">
-              @component('components/menu')
+              @menu()
                 @slot('links')
-                <p class="menu-label">
-                  Admin
-                </p>
-                <ul class="menu-list">
-                  <li><a href="{{ route('users.manage') }}" aria-current="page">Manage Users</a></li>
-                </ul>
-                <p class="menu-label">
-                  Navigation
-                </p>
-                <ul class="menu-list">
-                  <li><a href="/">Home</a></li>
-                  <li><a href="dashboard">Dashboard</a></li>
-                  <li><a href="{{ route('auth.logout') }}">Logout</a></li>
-                </ul>
+                  <p class="menu-label">
+                    Admin
+                  </p>
+                  <ul class="menu-list">
+                    <li><a href="{{ route('users.manage') }}" aria-current="page">Manage Users</a></li>
+                  </ul>
+                  <p class="menu-label">
+                    Navigation
+                  </p>
+                  <ul class="menu-list">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="dashboard">Dashboard</a></li>
+                    <li><a href="{{ route('auth.logout') }}">Logout</a></li>
+                  </ul>
                 @end
               @end
             </div>
@@ -61,7 +61,7 @@
         <section class="section">
           <div class="columns">
             <div class="column is-one-quarter">
-              @component('components/menu')
+              @menu()
                 @slot('links')
                 <p class="menu-label">
                   Navigation
