@@ -7,8 +7,7 @@
             <div class="column is-half">
                 <div class="box mt-6">
                     <p class="title">Register</p>
-                    <form action="{{ route('auth.register') }}" method="POST">
-                        {{ csrfField() }}
+                    @forms.post({ action: route('auth.register') })
                         <div class="field">
                             <label class="label">Email</label>
                             <div class="control">
@@ -70,7 +69,7 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    @end
                 </div>
             </div>
         </div>

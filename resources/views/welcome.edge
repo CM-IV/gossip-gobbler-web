@@ -8,7 +8,7 @@
         <div class="columns is-vcentered">
           <div class="column is-half">
             <h1 class="title"><span class="text-gradient">Gossip </span>Gobbler</h1>
-            @if(auth.user)
+            @if(auth.isLoggedIn)
               <div class="content is-hidden-mobile is-hidden-tablet-only">
                 <div class="buttons">
                     <a href="dashboard" class="button is-rounded is-success">

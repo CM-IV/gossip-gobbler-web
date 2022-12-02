@@ -8,22 +8,22 @@
     <section class="section">
         <div class="columns">
             <div class="column is-one-quarter">
-              @component('components/menu')
+              @menu()
                 @slot('links')
-                <p class="menu-label">
-                  Admin
-                </p>
-                <ul class="menu-list">
-                  <li><a href="{{ route('users.manage') }}" aria-current="page">Manage Users</a></li>
-                </ul>
-                <p class="menu-label">
-                  Navigation
-                </p>
-                <ul class="menu-list">
-                  <li><a href="/">Home</a></li>
-                  <li><a href="dashboard">Dashboard</a></li>
-                  <li><a href="{{ route('auth.logout') }}">Logout</a></li>
-                </ul>
+                    <p class="menu-label">
+                    Admin
+                    </p>
+                    <ul class="menu-list">
+                    <li><a href="{{ route('users.manage') }}" aria-current="page">Manage Users</a></li>
+                    </ul>
+                    <p class="menu-label">
+                    Navigation
+                    </p>
+                    <ul class="menu-list">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="dashboard">Dashboard</a></li>
+                    <li><a href="{{ route('auth.logout') }}">Logout</a></li>
+                    </ul>
                 @end
               @end
             </div>
@@ -47,33 +47,31 @@
                                         <td>
                                             {{ user.username }}
                                             @if(user.id === auth.user?.id)
-                                            (You)
+                                                (You)
                                             @end
                                         </td>
                                         <td>
-                                            <form action="{{ route('role', { id: user.id }, { qs: { _method: 'PATCH' } }) }}" method="POST">
-                                                {{ csrfField() }}
+                                            @forms.patch({ action: route('role', { id: user.id }) })
                                                 <div class="select">
                                                     <select name="roleId" onchange="this.form.submit()">
                                                     @each(role in roles)
                                                         <option value="{{ role.id }}" {{ role.id === user.role_id ? "selected" : "" }}>
                                                             {{ role.role }}
                                                         </option>
-                                                    @end
+                                                    @endeach
                                                     </select>
                                                 </div>
-                                            </form>
+                                            @end
                                         </td>
                                         <td>{{ user.email }}</td>
                                         @set('date', new Date(user.created_at))
                                         <td>{{ date.toDateString() }}</td>
                                         <td>
-                                            <form action="{{ route('destroy', { id: user.id }, { qs: { _method: 'DELETE' } }) }}" method="post">
-                                                {{ csrfField() }}
+                                            @forms.delete({ action: route('destroy', { id: user.id }) })
                                                 <button class="button is-rounded is-warning" type="button" onclick="confirm('Are you sure?') && this.form.submit()">
                                                     Delete
                                                 </button>
-                                            </form>
+                                            @end
                                         </td>
                                     </tr>
                                     @endeach
@@ -81,7 +79,7 @@
                             </table>
                         </div>
                         @if(users.meta.total > users.meta.per_page)
-                            @!component('components/paginator', pagination = users)
+                            @!paginator(pagination = users)
                         @end
                     </div>
                 </div>

@@ -12,18 +12,17 @@
                         <p>{{ flashMessages.get('errors.title') }}</p>
                     </div>
                 @end
-                <form action="{{ route('auth.login') }}" method="POST">
-                    {{ csrfField() }}
+                @forms.post({ action: route('auth.login') })
                     <div class="field">
                         <label class="label">Username or Email</label>
                         <div class="control">
-                        <input
-                            class="input"
-                            name="uid"
-                            type="text"
-                            placeholder="Username or Email"
-                            required
-                        />
+                            <input
+                                class="input"
+                                name="uid"
+                                type="text"
+                                placeholder="Username or Email"
+                                required
+                            />
                         </div>
                     </div>
 
@@ -55,7 +54,7 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                @end
             </div>
         </div>
     </div>
