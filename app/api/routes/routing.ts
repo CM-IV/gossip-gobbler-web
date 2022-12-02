@@ -15,9 +15,7 @@ import HealthCheck from '@ioc:Adonis/Core/HealthCheck'
 Route.get('/', async ({ view }) => {
   return view.render('welcome')
 })
-Route.get('dashboard', async ({ view }) => {
-  return view.render('dashboard')
-}).middleware('auth')
+Route.get('/dashboard/:name', 'ProfilesController.show').as('profiles.show').middleware('auth')
 Route.get('manage', 'UsersController.manage').as('users.manage').middleware(['auth', 'role:admin'])
 Route.get('register', async ({ view }) => {
   return view.render('auth/register')

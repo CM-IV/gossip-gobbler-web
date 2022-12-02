@@ -1,0 +1,36 @@
+<div class="card">
+    <div class="card-content">
+        <article class="media">
+        @if(profile.avatar)
+            <figure class="media-left">
+                <p class="image is-48x48">
+                    <img class="is-rounded" src="{{ profile.avatar }}" alt="avatar image" width={48}>
+                </p>
+            </figure>
+        @end
+        <div class="media-content ml-4">
+            <div class="content">
+            <div class="field">
+                <label class="label">Name</label>
+                <p>{{ profile.name }}</p>
+            </div>
+            <div class="field">
+                <label class="label">Email</label>
+                <p>{{ auth.user?.email }}</p>
+            </div>
+            <div class="field">
+                <label class="label">Date Joined</label>
+                @set('date', new Date(profile.createdAt))
+                <p>{{ date.toDateString() }}</p>
+            </div>
+            @if(profile.bio)
+                <div class="field">
+                <label class="label">Bio</label>
+                <textarea class="textarea has-fixed-size" name="bio" rows="10" readonly>{{ profile.bio }}</textarea>
+                </div>
+            @end
+            </div>
+        </div>
+        </article>
+    </div>
+</div>

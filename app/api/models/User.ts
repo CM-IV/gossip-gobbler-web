@@ -7,9 +7,12 @@ import {
   computed,
   belongsTo,
   BelongsTo,
+  hasOne,
+  HasOne,
 } from '@ioc:Adonis/Lucid/Orm'
 import Role from './Role'
 import Roles from '../enums/Role'
+import Profile from './Profile'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -43,6 +46,11 @@ export default class User extends BaseModel {
 
   @belongsTo(() => Role)
   public role: BelongsTo<typeof Role>
+
+  @hasOne(() => Profile, {
+    foreignKey: "user_id"
+  })
+  public profile: HasOne<typeof Profile>
 
   @beforeSave()
   public static async hashPassword(user: User) {

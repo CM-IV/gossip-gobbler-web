@@ -21,8 +21,9 @@ export default class AuthController {
       ]),
     })
 
-    const payload = await request.validate({ schema: userSchema })
-    await User.create(payload)
+    const { email, username, password } = await request.validate({ schema: userSchema })
+    const user = await User.create({ email, username, password })
+    await user.related('profile').create({ name: username })
 
     session.flash('message', 'Registration Successful')
 
@@ -35,7 +36,7 @@ export default class AuthController {
     try {
       await auth.use('web').attempt(uid, password)
 
-      return response.redirect('/dashboard')
+      return response.redirect('/')
     } catch {
       session.flash('errors', {
         title: 'Username, email, or password is incorrect',
