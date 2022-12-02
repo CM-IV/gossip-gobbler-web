@@ -2,14 +2,26 @@
     <div class="level-left">
       <ul class="pagination" role="navigation" aria-label="pagination">
         <li class="level-item">
-          <a class="pagination-previous" href="{{ pagination.meta.current_page == 1 ? '#' : '?page=' + (pagination.meta.current_page - 1) }}">
-            Previous
-          </a>
+          @if(pagination.meta.current_page == 1)
+            <a class="pagination-previous is-disabled" disabled>
+              Previous
+            </a>
+          @else
+            <a class="pagination-previous" href="{{ pagination.meta.current_page == 1 ? '#' : '?page=' + (pagination.meta.current_page - 1) }}">
+              Previous
+            </a>
+          @end
         </li>
         <li class="level-item">
-          <a class="pagination-next" href="{{ pagination.meta.last_page == pagination.meta.current_page ? '#' : '?page=' + (pagination.meta.current_page + 1) }}">
-            Next
-          </a>
+          @if(pagination.meta.last_page == pagination.meta.current_page)
+            <a class="pagination-next is-disabled" disabled>
+              Next
+            </a>
+          @else
+            <a class="pagination-next" href="{{ pagination.meta.last_page == pagination.meta.current_page ? '#' : '?page=' + (pagination.meta.current_page + 1) }}">
+              Next
+            </a>
+          @end
         </li>
       </ul>
     </div>
