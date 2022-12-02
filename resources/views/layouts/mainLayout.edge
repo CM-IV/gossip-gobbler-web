@@ -1,3 +1,5 @@
+@set('profileInfo', await auth.user?.related('profile').query().first())
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -16,7 +18,7 @@
                     @if(auth.user?.isAdmin)
                         <a class="navbar-item" href="{{ route('users.manage') }}" aria-current="page">Manage Users</a>
                     @end
-                    <a href="dashboard" class="navbar-item">
+                    <a href="{{ route('profiles.show', { name: profileInfo.name }) }}" class="navbar-item">
                         Dashboard
                     </a>
                     <a class="navbar-item" href="{{ route('auth.logout') }}">Logout</a>
