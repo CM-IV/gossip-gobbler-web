@@ -8,7 +8,7 @@ export default class UsersController {
   public async manage({ request, view }: HttpContextContract) {
     const page = request.input('page', 1)
 
-    const users = await User.query().orderBy('username').paginate(page, 8)
+    const users = await User.query().orderBy('role_id').orderBy('username').paginate(page, 8)
 
     const roles = await Role.query().orderBy('role')
 
