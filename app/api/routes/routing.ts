@@ -15,7 +15,8 @@ import HealthCheck from '@ioc:Adonis/Core/HealthCheck'
 Route.get('/', async ({ view }) => {
   return view.render('welcome')
 })
-Route.get('/dashboard/:name', 'ProfilesController.show').as('profiles.show').middleware('auth')
+Route.get('/profile/:name', 'ProfilesController.show').as('profiles.show').middleware('auth')
+Route.get('/profile/:name/edit', 'ProfilesController.edit').as('settings').middleware('auth')
 Route.get('manage', 'UsersController.manage').as('users.manage').middleware(['auth', 'role:admin'])
 Route.get('register', async ({ view }) => {
   return view.render('auth/register')
@@ -28,12 +29,12 @@ Route.get('login', async ({ view }) => {
 Route.group(() => {
   Route.post('register', 'AuthController.register').as('auth.register').middleware('guest')
   Route.post('login', 'AuthController.login').as('auth.login').middleware('guest')
-
+  Route.patch('profile', 'ProfilesController.update').as('profiles.update').middleware('auth')
   Route.get('logout', 'AuthController.logout').as('auth.logout').middleware('auth')
   Route.delete('/:id', 'UsersController.destroy').as('destroy').middleware(['auth', 'role:admin'])
   Route.patch('/:id/role', 'UsersController.mutateRole')
     .as('role')
-    .middleware(['auth', 'role:admin']) 
+    .middleware(['auth', 'role:admin'])
 
   //Health check
   Route.get('health', async ({ response }) => {
