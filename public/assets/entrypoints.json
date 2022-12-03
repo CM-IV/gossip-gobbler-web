@@ -1,9 +1,7 @@
 {
   "entrypoints": {
     "styles": {
-      "css": [
-        "/assets/styles.a192f716.css"
-      ]
+      "css": ["/assets/styles.a192f716.css"]
     }
   }
 }

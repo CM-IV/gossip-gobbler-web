@@ -1,7 +1,9 @@
 @import './bulma.min.css';
 @import './fork-awesome.min.css';
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
