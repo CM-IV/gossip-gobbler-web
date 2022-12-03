@@ -48,7 +48,7 @@ export default class User extends BaseModel {
   public role: BelongsTo<typeof Role>
 
   @hasOne(() => Profile, {
-    foreignKey: "userId"
+    foreignKey: 'userId',
   })
   public profile: HasOne<typeof Profile>
 
