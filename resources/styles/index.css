@@ -12,7 +12,7 @@ body {
   height: 100vh;
 }
 
-.notification {
+#loginNotify {
   position: absolute;
   right: 0;
   max-width: 20%;
