@@ -1,6 +1,6 @@
 @layout('layouts/mainLayout')
 @set('title', 'Manage Users')
-@set('profileInfo', await auth.user?.related('profile').query().first())
+@set('profile', await auth.user?.related('profile').query().first())
 
 @section('body')
     <main>
@@ -10,24 +10,7 @@
         <section class="section">
             <div class="columns">
                 <div class="column is-one-quarter">
-                  @menu()
-                    @slot('links')
-                        <p class="menu-label">
-                        Admin
-                        </p>
-                        <ul class="menu-list">
-                        <li><a href="{{ route('users.manage') }}" aria-current="page">Manage Users</a></li>
-                        </ul>
-                        <p class="menu-label">
-                        Navigation
-                        </p>
-                        <ul class="menu-list">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="{{ route('profiles.show', { name: profileInfo.name }) }}">Profile</a></li>
-                        <li><a href="{{ route('auth.logout') }}">Logout</a></li>
-                        </ul>
-                    @end
-                  @end
+                  @!adminMenu(profile = profile)
                 </div>
                 <div class="column">
                     <div class="columns is-centered">

@@ -9,10 +9,13 @@ import {
   BelongsTo,
   hasOne,
   HasOne,
+  hasMany,
+  HasMany,
 } from '@ioc:Adonis/Lucid/Orm'
 import Role from './Role'
 import Roles from '../enums/Role'
 import Profile from './Profile'
+import Scraper from './Scraper'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -51,6 +54,9 @@ export default class User extends BaseModel {
     foreignKey: 'userId',
   })
   public profile: HasOne<typeof Profile>
+
+  @hasMany(() => Scraper)
+  public scrapers: HasMany<typeof Scraper>
 
   @beforeSave()
   public static async hashPassword(user: User) {

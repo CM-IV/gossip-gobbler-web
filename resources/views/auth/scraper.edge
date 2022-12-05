@@ -1,0 +1,84 @@
+@layout('layouts/mainLayout')
+@set('title', 'Reddit Scraper')
+@set('profile', await auth.user?.related('profile').query().first())
+
+
+@section('body')
+  <main>
+    <section class="section">
+        <h1 class="title">Scraper</h1>
+    </section>
+    <section class="section">
+        @if(auth.user?.isAdmin)
+          <div class="columns">
+            <div class="column is-one-quarter">
+              @!adminMenu(profile = profile)
+            </div>
+            <div class="column">
+              <div class="columns is-centered">
+                <div class="column is-three-fifths">
+                  @forms.post({ action: route('scraper.scrapeData') })
+                    <div class="field">
+                        <label class="label">Reddit URL to Scrape</label>
+                        <div class="control">
+                            <input
+                                class="input"
+                                name="scrapeUrl"
+                                type="url"
+                                placeholder="https://old.reddit.com/r/amd"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="item">
+                            <div class="updateButton">
+                                <button class="button is-primary" type="submit">
+                                Scrape
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                  @end
+                </div>
+              </div>
+            </div>
+          </div>
+      @else
+        <div class="columns">
+        <div class="column is-one-quarter">
+            @!menu(profile = profile)
+        </div>
+        <div class="column">
+            <div class="columns is-centered">
+              <div class="column is-three-fifths">
+                @forms.post({ action: route('scraper.scrapeData') })
+                    <div class="field">
+                      <label class="label">Reddit URL to Scrape</label>
+                      <div class="control">
+                          <input
+                              class="input"
+                              name="scrapeUrl"
+                              type="url"
+                              placeholder="https://old.reddit.com/r/amd"
+                          />
+                      </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="item">
+                            <div class="updateButton">
+                                <button class="button is-primary" type="submit">
+                                  Scrape
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                @end
+              </div>
+            </div>
+        </div>
+      @end
+    </section>
+  </main>
+@end
