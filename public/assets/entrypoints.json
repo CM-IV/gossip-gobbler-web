@@ -2,7 +2,7 @@
   "entrypoints": {
     "styles": {
       "css": [
-        "http://localhost:8080/assets/styles.css"
+        "/assets/styles.cb1c84e5.css"
       ]
     }
   }
