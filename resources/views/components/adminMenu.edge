@@ -1,13 +1,19 @@
 <div class="box is-hidden-mobile is-hidden-tablet-only">
     <aside class="menu">
         <p class="menu-label">
+            Admin
+          </p>
+          <ul class="menu-list">
+            <li><a href="{{ route('users.manage') }}" aria-current="page">Manage Users</a></li>
+          </ul>
+          <p class="menu-label">
             Navigation
-        </p>
-        <ul class="menu-list">
+          </p>
+          <ul class="menu-list">
             <li><a href="/">Home</a></li>
             <li><a href="{{ route('scraper') }}">Scraper</a></li>
             <li><a href="{{ route('profiles.show', { name: encodeURIComponent(profile.name) }) }}">Profile</a></li>
             <li><a href="{{ route('auth.logout') }}">Logout</a></li>
-        </ul>
+          </ul>
     </aside>
 </div>

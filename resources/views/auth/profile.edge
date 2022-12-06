@@ -10,29 +10,15 @@
         <section class="section">
           <div class="columns">
             <div class="column is-one-quarter">
-              @menu()
-                @slot('links')
-                  <p class="menu-label">
-                    Admin
-                  </p>
-                  <ul class="menu-list">
-                    <li><a href="{{ route('users.manage') }}" aria-current="page">Manage Users</a></li>
-                  </ul>
-                  <p class="menu-label">
-                    Navigation
-                  </p>
-                  <ul class="menu-list">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="{{ route('profiles.show', { name: encodeURIComponent(profile.name) }) }}">Profile</a></li>
-                    <li><a href="{{ route('auth.logout') }}">Logout</a></li>
-                  </ul>
-                @end
-              @end
+              @!adminMenu({ profile: profile })
             </div>
             <div class="column">
               <div class="columns is-centered">
                 <div class="column is-three-fifths">
-                  @!profileCard(profile = profile)
+                  @!profileCard({
+                    profile: profile,
+                    totalScrapes: totalScrapes
+                  })
                 </div>
               </div>
             </div>
@@ -45,23 +31,15 @@
         <section class="section">
           <div class="columns">
             <div class="column is-one-quarter">
-              @menu()
-                @slot('links')
-                <p class="menu-label">
-                  Navigation
-                </p>
-                <ul class="menu-list">
-                  <li><a href="/">Home</a></li>
-                  <li><a href="{{ route('profiles.show', { name: encodeURIComponent(profile.name) }) }}">Profile</a></li>
-                  <li><a href="{{ route('auth.logout') }}">Logout</a></li>
-                </ul>
-                @end
-              @end
+              @!menu({ profile: profile })
             </div>
             <div class="column">
               <div class="columns is-centered">
                 <div class="column is-three-fifths">
-                  @!profileCard(profile = profile)
+                  @!profileCard({
+                    profile: profile,
+                    totalScrapes: totalScrapes
+                  })
                 </div>
               </div>
             </div>
