@@ -10,7 +10,7 @@
         <section class="section">
             <div class="columns">
                 <div class="column is-one-quarter">
-                  @!adminMenu(profile = profile)
+                  @!adminMenu({ profile: profile })
                 </div>
                 <div class="column">
                     <div class="columns is-centered">
@@ -64,7 +64,9 @@
                                 </table>
                             </div>
                             @if(users.meta.total > users.meta.per_page)
-                                @!paginator(pagination = users)
+                                @!paginator({
+                                    pagination: users
+                                })
                             @end
                         </div>
                     </div>

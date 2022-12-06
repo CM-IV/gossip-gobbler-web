@@ -20,6 +20,7 @@ specifiers:
   adonis-preset-ts: ^2.1.0
   adonis5-prometheus: ^0.0.7
   bulma: ^0.9.4
+  deta: ^1.1.0
   eslint: ^8.28.0
   eslint-config-prettier: ^8.5.0
   eslint-plugin-adonis: ^2.1.1
@@ -51,6 +52,7 @@ dependencies:
   '@adonisjs/shield': 7.1.0_6zfde6vhifp77zjy4plh6p5tcu
   '@adonisjs/view': 6.2.0_@adonisjs+core@5.9.0
   adonis5-prometheus: 0.0.7_@adonisjs+core@5.9.0
+  deta: 1.1.0
   luxon: 3.1.0
   pg: 8.8.0
   phc-argon2: 1.1.4
@@ -4197,6 +4199,14 @@ packages:
   /destroy/1.2.0:
     resolution: {integrity: sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg==}
     engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
+
+  /deta/1.1.0:
+    resolution: {integrity: sha512-mQAvfAsB++McPMT3Gb39KWkxfFzaPSF+z8XNpomakkUslg9xTu6Z8gVjAXaDGJm0LFEIIZQdokpU+lOJOXtOqw==}
+    dependencies:
+      node-fetch: 2.6.7
+    transitivePeerDependencies:
+      - encoding
+    dev: false
 
   /detect-indent/6.1.0:
     resolution: {integrity: sha512-reYkTUJAZb9gUuZ2RvVCNhVHdg62RHnJ7WJl8ftMi4diZ6NWlciOzQN88pUhSELEwflJht4oQDv0F0BMlwaYtA==}

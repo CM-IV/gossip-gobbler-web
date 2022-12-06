@@ -10,12 +10,15 @@
         <section class="section">
           <div class="columns">
             <div class="column is-one-quarter">
-              @!adminMenu(profile = profile)
+              @!adminMenu({ profile: profile })
             </div>
             <div class="column">
               <div class="columns is-centered">
                 <div class="column is-three-fifths">
-                  @!profileCard(profile = profile)
+                  @!profileCard({
+                    profile: profile,
+                    totalScrapes: totalScrapes
+                  })
                 </div>
               </div>
             </div>
@@ -28,12 +31,15 @@
         <section class="section">
           <div class="columns">
             <div class="column is-one-quarter">
-              @!menu(profile = profile)
+              @!menu({ profile: profile })
             </div>
             <div class="column">
               <div class="columns is-centered">
                 <div class="column is-three-fifths">
-                  @!profileCard(profile = profile)
+                  @!profileCard({
+                    profile: profile,
+                    totalScrapes: totalScrapes
+                  })
                 </div>
               </div>
             </div>

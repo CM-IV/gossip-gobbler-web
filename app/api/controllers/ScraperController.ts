@@ -1,41 +1,74 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import playwright from "playwright"
-// import Scraper from '../models/Scraper'
+import Scraper from '../models/Scraper'
+import { redditData } from '../deta/init'
 
 export default class ScraperController {
-    //TODO have scraper main page return the previously scraped data
-    public async show({ view }: HttpContextContract) {
-        return view.render('auth/scraper')
-    }
+    public async show({ view, auth }: HttpContextContract) {
 
+        if (auth.user!.isAdmin) {
+            const adminScrapeData = await Scraper.query()
 
-    public async scrapeData({ request, response, auth }: HttpContextContract) {
-        const scrapeUrl = request.body().scrapeUrl
-
-        const browser = await playwright.firefox.launch({
-            headless: true
-        })
-
-        const page = await browser.newPage();
-
-        await page.goto(scrapeUrl)
-        
-        const data = [] as any[];
-        await page.waitForSelector("#siteTable");
-        const posts = await page.$$('div.thing');
-        
-        for (let post of posts) {
-            const title = await post.$eval('a.title', el => el.textContent);
-            const author = await post.$eval('a.author', el => el.textContent);
-            const votes = await post.$eval('.score.unvoted', el => el.textContent);
-            data.push({ scrapeUrl, title, author, votes });
+            return view.render('auth/scraper', { adminScrapeData })
         }
 
-        await browser.close();
+        const scrapeData = await Scraper
+            .query()
+            .where("user_id", auth.user!.id)
 
-        await auth.user?.related('scrapers').createMany(data)
-        
-        return response.redirect().back()
+        return view.render('auth/scraper', { scrapeData })
+    }
+
+
+    public async scrapeData({ request, response, auth, session }: HttpContextContract) {
+
+        try {
+            const name = request.input("name")
+            const scrapeUrl = request.input("scrapeUrl")
+            // const select = request.input("selector")
+
+            const browser = await playwright.firefox.launch({
+                headless: true
+            })
+
+            const page = await browser.newPage();
+
+            await page.goto(scrapeUrl)
+            
+            const data = [] as any[];
+            await page.waitForSelector("#siteTable");
+            const posts = await page.$$('div.thing');
+            
+            for (let post of posts) {
+                const title = await post.$eval('a.title', el => el.textContent);
+                const author = await post.$eval('a.author', el => el.textContent);
+                const votes = await post.$eval('.score.unvoted', el => el.textContent);
+                data.push({ scrapeUrl, title, author, votes });
+            }
+
+            await browser.close();
+
+            await auth.user?.related('scrapers').createMany(data)
+
+            await redditData.put(`${name}.json`,
+                { 
+                    data: JSON.stringify(data, null, 2), 
+                    contentType: 'application/json' 
+                })
+
+            session.flash('message', 'Scrape Successful')
+            
+            return response.redirect().back()
+
+        } catch (error) {
+            console.error(error)
+            session.flash('errors', {
+                title: 'There was an error!',
+                description: error
+            })
+            return response.redirect().back()
+        }
         
     }
+    //TODO -- List or Get back JSON files
 }

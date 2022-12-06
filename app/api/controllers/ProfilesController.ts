@@ -1,12 +1,21 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
+import Database from '@ioc:Adonis/Lucid/Database'
 import Profile from '../models/Profile'
 
 export default class ProfilesController {
-  public async show({ view, params }: HttpContextContract) {
+  public async show({ view, params, auth }: HttpContextContract) {
     const profile = await Profile.findByOrFail('name', decodeURIComponent(params.name))
 
-    return view.render('auth/profile', { profile })
+    const scrapes = await Database
+      .from('scrapers')
+      .count('* as total')
+      .where('user_id', auth.user!.id)
+
+    return view.render('auth/profile', {
+      totalScrapes: scrapes[0].total,
+      profile
+    })
   }
 
   public async edit({ view, auth }: HttpContextContract) {
