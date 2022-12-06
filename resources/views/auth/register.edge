@@ -7,6 +7,12 @@
             <div class="column is-half">
                 <div class="box mt-6">
                     <p class="title">Register</p>
+                    @if(flashMessages.has('errors'))
+                        <div id="notify" class="notification is-danger">
+                            <button class="delete" onclick="this.parentNode.style.display='none'"></button>
+                            <p>{{ flashMessages.get('errors.passwordConfirmation') }}</p>
+                        </div>
+                    @end
                     @forms.post({ action: route('auth.register') })
                         <div class="field">
                             <label class="label">Email</label>
