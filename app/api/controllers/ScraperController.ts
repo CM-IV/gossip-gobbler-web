@@ -1,31 +1,53 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Database from '@ioc:Adonis/Lucid/Database'
 import playwright from "playwright"
-import Scraper from '../models/Scraper'
 import { redditData } from '../deta/init'
 
 export default class ScraperController {
-    public async show({ view, auth }: HttpContextContract) {
+    public async show({ view, auth, session }: HttpContextContract) {
 
-        if (auth.user!.isAdmin) {
-            const adminScrapeData = await Scraper.query()
+        const scrapes = await Database
+            .from('scrapers')
+            .count('* as total')
+            .where('user_id', auth.user!.id)
 
-            return view.render('auth/scraper', { adminScrapeData })
+        if (Number(scrapes[0].total) >= 100 && !auth.user!.isCustomer && !auth.user!.isAdmin) {
+            session.flash('errors', {
+                title: 'Contact the admin - chuck@civdev.xyz - for a customer plan!'
+            })
         }
 
-        const scrapeData = await Scraper
-            .query()
-            .where("user_id", auth.user!.id)
+        const scrapeFiles = await redditData.list()
 
-        return view.render('auth/scraper', { scrapeData })
+        const filteredFiles = scrapeFiles.names.filter(file => file.includes(auth.user!.username))
+
+        return view.render('auth/scraper', { 
+            filteredFiles,
+            totalScrapes: scrapes[0].total,
+        })
     }
 
 
     public async scrapeData({ request, response, auth, session }: HttpContextContract) {
 
         try {
+
+            const scrapes = await Database
+                .from('scrapers')
+                .count('* as total')
+                .where('user_id', auth.user!.id)
+
+            if (Number(scrapes[0].total) >= 100 && !auth.user!.isCustomer && !auth.user!.isAdmin) {
+                session.flash('errors', {
+                    title: 'You have over 100 posts scraped, contact chuck@civdev.xyz for a customer plan!'
+                })
+
+                return response.redirect().back()
+            }
+
+            const username = auth.user!.username;
             const name = request.input("name")
             const scrapeUrl = request.input("scrapeUrl")
-            // const select = request.input("selector")
 
             const browser = await playwright.firefox.launch({
                 headless: true
@@ -48,11 +70,12 @@ export default class ScraperController {
 
             await browser.close();
 
-            await auth.user?.related('scrapers').createMany(data)
+            await auth.user!.related('scrapers').createMany(data)
 
-            await redditData.put(`${name}.json`,
+            await redditData.put(`${name}-${username}.json`,
                 { 
-                    data: JSON.stringify(data, null, 2), 
+                    data: JSON.stringify(data, null, 2)
+                        .replace(/'/g, "\\'"),
                     contentType: 'application/json' 
                 })
 
@@ -63,8 +86,7 @@ export default class ScraperController {
         } catch (error) {
             console.error(error)
             session.flash('errors', {
-                title: 'There was an error!',
-                description: error
+                title: 'There was an error!'
             })
             return response.redirect().back()
         }

@@ -1,6 +1,7 @@
 @layout('layouts/mainLayout')
 @set('title', 'Reddit Scraper')
 @set('profile', await auth.user?.related('profile').query().first())
+@set('error', flashMessages.get('errors.title') )
 
 
 @section('body')
@@ -12,7 +13,7 @@
         @if(auth.user?.isAdmin)
           <div class="columns">
             <div class="column is-one-quarter">
-              @!adminMenu(profile = profile)
+              @!adminMenu({ profile: profile })
             </div>
             <div class="column">
               <div class="columns is-centered">
@@ -29,6 +30,10 @@
                     </div>
                   @end
                   @!scraperCard()
+
+                  <br/>
+
+                  @!displayJson({ filteredFiles: filteredFiles })
                 </div>
               </div>
             </div>
@@ -36,7 +41,7 @@
       @else
         <div class="columns">
         <div class="column is-one-quarter">
-            @!menu(profile = profile)
+            @!menu({ profile: profile })
         </div>
         <div class="column">
             <div class="columns is-centered">
@@ -52,7 +57,7 @@
                       <p>{{ flashMessages.get('message') }}</p>
                   </div>
                 @end
-                @!scraperCard()
+                @!scraperCard({ error: error })
               </div>
             </div>
         </div>

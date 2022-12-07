@@ -47,6 +47,11 @@ export default class User extends BaseModel {
     return this.roleId === Roles.ADMIN
   }
 
+  @computed()
+  public get isCustomer() {
+    return this.roleId === Roles.CUSTOMER
+  }
+
   @belongsTo(() => Role)
   public role: BelongsTo<typeof Role>
 
