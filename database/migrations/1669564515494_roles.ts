@@ -26,6 +26,10 @@ export default class extends BaseSchema {
           id: Roles.USER,
           role: 'User',
         },
+        {
+          id: Roles.CUSTOMER,
+          role: 'Customer',
+        },
       ])
     })
   }

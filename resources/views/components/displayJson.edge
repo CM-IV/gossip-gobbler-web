@@ -1,0 +1,14 @@
+<div class="card">
+    <div class="card-content">
+        <div class="field">
+            <label class="label">Scrape Data Files</label>
+            <div class="control">
+                <textarea class="textarea has-fixed-size" rows="10" readonly>
+                    @each(file in filteredFiles)
+                    {{ file }}
+                    @end
+                </textarea>
+            </div>
+        </div>
+    </div>
+</div>

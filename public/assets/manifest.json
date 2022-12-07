@@ -1,8 +1,8 @@
 {
-  "assets/styles.css": "/assets/styles.cb1c84e5.css",
-  "assets/images/forkawesome-webfont.svg": "/assets/images/forkawesome-webfont.86fe294b.svg",
-  "assets/fonts/forkawesome-webfont.eot": "/assets/fonts/forkawesome-webfont.26681381.eot",
-  "assets/fonts/forkawesome-webfont.ttf?v=1.2.0": "/assets/fonts/forkawesome-webfont.94d78a2c.ttf",
-  "assets/fonts/forkawesome-webfont.woff?v=1.2.0": "/assets/fonts/forkawesome-webfont.2350c617.woff",
-  "assets/fonts/forkawesome-webfont.woff2?v=1.2.0": "/assets/fonts/forkawesome-webfont.fafb863d.woff2"
+  "assets/styles.css": "http://localhost:8080/assets/styles.css",
+  "assets/images/forkawesome-webfont.svg": "http://localhost:8080/assets/images/forkawesome-webfont.86fe294b.svg",
+  "assets/fonts/forkawesome-webfont.eot": "http://localhost:8080/assets/fonts/forkawesome-webfont.26681381.eot",
+  "assets/fonts/forkawesome-webfont.ttf?v=1.2.0": "http://localhost:8080/assets/fonts/forkawesome-webfont.94d78a2c.ttf",
+  "assets/fonts/forkawesome-webfont.woff?v=1.2.0": "http://localhost:8080/assets/fonts/forkawesome-webfont.2350c617.woff",
+  "assets/fonts/forkawesome-webfont.woff2?v=1.2.0": "http://localhost:8080/assets/fonts/forkawesome-webfont.fafb863d.woff2"
 }

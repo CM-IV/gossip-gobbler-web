@@ -24,24 +24,18 @@
                 </div>
             </div>
 
-            {{--  <div class="field">
-                <label class="label">Save As</label>
-                <div class="control">
-                  <div class="select">
-                    <select name="selector">
-                      <option>json</option>
-                      <option>csv</option>
-                    </select>
-                  </div>
-                </div>
-            </div>  --}}
-
             <div class="field">
                 <div class="item">
                     <div class="updateButton">
-                        <button class="button is-primary" type="submit" onclick="this.classList.add('is-loading')">
-                        Scrape
-                        </button>
+                        @if(error)
+                            <button class="button is-primary is-disabled" type="submit" disabled>
+                            Scrape
+                            </button>
+                        @else
+                            <button class="button is-primary" type="submit" onclick="this.classList.add('is-loading')">
+                            Scrape
+                            </button>
+                        @end
                     </div>
                 </div>
             </div>
