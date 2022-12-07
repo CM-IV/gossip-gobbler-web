@@ -13,7 +13,7 @@ export default class ScraperController {
 
         if (Number(scrapes[0].total) >= 100 && !auth.user!.isCustomer && !auth.user!.isAdmin) {
             session.flash('errors', {
-                title: 'Contact the admin - chuck@civdev.xyz - for a customer plan!'
+                title: 'For more scrapes and data access, contact chuck@civdev.xyz for a customer plan!'
             })
         }
 
@@ -32,14 +32,9 @@ export default class ScraperController {
 
         try {
 
-            const scrapes = await Database
-                .from('scrapers')
-                .count('* as total')
-                .where('user_id', auth.user!.id)
-
-            if (Number(scrapes[0].total) >= 100 && !auth.user!.isCustomer && !auth.user!.isAdmin) {
+            if (!auth.user!.isCustomer && !auth.user!.isAdmin) {
                 session.flash('errors', {
-                    title: 'You have over 100 posts scraped, contact chuck@civdev.xyz for a customer plan!'
+                    title: 'For page scrapes and data access, contact chuck@civdev.xyz for a customer plan!'
                 })
 
                 return response.redirect().back()
