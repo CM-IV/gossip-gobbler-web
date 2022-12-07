@@ -5,7 +5,7 @@ import { redditData } from '../deta/init'
 export default class ScraperController {
     public async show({ view, auth, session }: HttpContextContract) {
 
-        if (!auth.user!.isCustomer && !auth.user!.isAdmin) {
+        if (!auth.user!.isCustomer || !auth.user!.isAdmin) {
             session.flash('errors', {
                 title: 'For page scrapes and data access, contact chuck@civdev.xyz for a customer plan!'
             })
@@ -23,7 +23,7 @@ export default class ScraperController {
 
         try {
 
-            if (!auth.user!.isCustomer && !auth.user!.isAdmin) {
+            if (!auth.user!.isCustomer || !auth.user!.isAdmin) {
                 session.flash('errors', {
                     title: 'For page scrapes and data access, contact chuck@civdev.xyz for a customer plan!'
                 })
