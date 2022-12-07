@@ -1,19 +1,13 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Database from '@ioc:Adonis/Lucid/Database'
 import playwright from "playwright"
 import { redditData } from '../deta/init'
 
 export default class ScraperController {
     public async show({ view, auth, session }: HttpContextContract) {
 
-        const scrapes = await Database
-            .from('scrapers')
-            .count('* as total')
-            .where('user_id', auth.user!.id)
-
-        if (Number(scrapes[0].total) >= 100 && !auth.user!.isCustomer && !auth.user!.isAdmin) {
+        if (!auth.user!.isCustomer && !auth.user!.isAdmin) {
             session.flash('errors', {
-                title: 'For more scrapes and data access, contact chuck@civdev.xyz for a customer plan!'
+                title: 'For page scrapes and data access, contact chuck@civdev.xyz for a customer plan!'
             })
         }
 
@@ -21,10 +15,7 @@ export default class ScraperController {
 
         const filteredFiles = scrapeFiles.names.filter(file => file.includes(auth.user!.username))
 
-        return view.render('auth/scraper', { 
-            filteredFiles,
-            totalScrapes: scrapes[0].total,
-        })
+        return view.render('auth/scraper', { filteredFiles })
     }
 
 
