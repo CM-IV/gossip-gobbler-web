@@ -13,13 +13,16 @@ export default class Scraper extends BaseModel {
   public scrapeUrl: string
 
   @column()
-  public title: string | null
+  public scrapeName: string
 
   @column()
-  public author: string | null
+  public title: string
 
   @column()
-  public votes: string | null
+  public author: string
+
+  @column()
+  public votes: string
 
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>
