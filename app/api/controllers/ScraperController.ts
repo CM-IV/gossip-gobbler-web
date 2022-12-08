@@ -1,15 +1,10 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import playwright from "playwright"
 import { redditData } from '../deta/init'
+import Scraper from '../models/Scraper'
 
 export default class ScraperController {
-    public async show({ view, auth, session }: HttpContextContract) {
-
-        if (!auth.user!.isCustomer && !auth.user!.isAdmin) {
-            session.flash('errors', {
-                title: 'For page scrapes and data access, contact chuck@civdev.xyz for a customer plan!'
-            })
-        }
+    public async show({ view, auth }: HttpContextContract) {
 
         const scrapeFiles = await redditData.list()
 
@@ -22,17 +17,9 @@ export default class ScraperController {
     public async scrapeData({ request, response, auth, session }: HttpContextContract) {
 
         try {
-
-            if (!auth.user!.isCustomer && !auth.user!.isAdmin) {
-                session.flash('errors', {
-                    title: 'For page scrapes and data access, contact chuck@civdev.xyz for a customer plan!'
-                })
-
-                return response.redirect().back()
-            }
-
             const username = auth.user!.username;
-            const name = request.input("name")
+            const fileName = request.input("name")
+            const scrapeName = `${fileName}-${username}.json`
             const scrapeUrl = request.input("scrapeUrl")
 
             const browser = await playwright.firefox.launch({
@@ -51,17 +38,18 @@ export default class ScraperController {
                 const title = await post.$eval('a.title', el => el.textContent);
                 const author = await post.$eval('a.author', el => el.textContent);
                 const votes = await post.$eval('.score.unvoted', el => el.textContent);
-                data.push({ scrapeUrl, title, author, votes });
+                data.push({ scrapeUrl, scrapeName, title, author, votes });
             }
 
             await browser.close();
 
             await auth.user!.related('scrapers').createMany(data)
 
-            await redditData.put(`${name}-${username}.json`,
+            await redditData.put(scrapeName,
                 { 
                     data: JSON.stringify(data, null, 2)
-                        .replace(/'/g, "\\'"),
+                        .replace(/'/g, "\\'")
+                        .replace(/[\u0000-\u0019]+/g,""),
                     contentType: 'application/json' 
                 })
 
@@ -78,5 +66,24 @@ export default class ScraperController {
         }
         
     }
-    //TODO -- List or Get back JSON files
+
+    public async getScrapeJson({ params, response }: HttpContextContract) {
+        const fileName = params.name
+
+        const blob = await redditData.get(fileName) as Blob
+
+        const jsonData = await blob.text()
+
+        return response.send(JSON.stringify(jsonData))
+    }
+
+    public async delScrapeJson({ params, response }: HttpContextContract) {
+        const fileName = params.name
+
+        await redditData.delete(fileName)
+
+        await Scraper.query().where("scrapeName", fileName).delete()
+
+        return response.redirect().back()
+    }
 }

@@ -33,7 +33,9 @@
 
                   <br/>
 
-                  @!displayJson({ filteredFiles: filteredFiles })
+                  @if(filteredFiles.length > 0)
+                    @!displayJson({ filteredFiles: filteredFiles })
+                  @end
                 </div>
               </div>
             </div>
@@ -61,7 +63,9 @@
 
                 <br/>
 
-                @!displayJson({ filteredFiles: filteredFiles })
+                @if(filteredFiles.length > 0 && auth.user?.isCustomer)
+                  @!displayJson({ filteredFiles: filteredFiles })
+                @end
               </div>
             </div>
         </div>

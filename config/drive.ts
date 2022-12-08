@@ -65,7 +65,7 @@ export default driveConfig({
       | storage services that has inbuilt capabilities to serve files.
       |
       */
-      serveFiles: false,
+      serveFiles: true,
 
       /*
       |--------------------------------------------------------------------------
