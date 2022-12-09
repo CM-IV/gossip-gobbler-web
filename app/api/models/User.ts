@@ -16,6 +16,7 @@ import Role from './Role'
 import Roles from '../enums/Role'
 import Profile from './Profile'
 import Scraper from './Scraper'
+import Token from './Token'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -54,6 +55,14 @@ export default class User extends BaseModel {
 
   @belongsTo(() => Role)
   public role: BelongsTo<typeof Role>
+
+  @hasMany(() => Token)
+  public tokens: HasMany<typeof Token>
+
+  @hasMany(() => Token, {
+    onQuery: query => query.where('type', "PASSWORD_RESET")
+  })
+  public passwordResetTokens: HasMany<typeof Token>
 
   @hasOne(() => Profile, {
     foreignKey: 'userId',

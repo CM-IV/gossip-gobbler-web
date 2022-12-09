@@ -15,6 +15,8 @@ import HealthCheck from '@ioc:Adonis/Core/HealthCheck'
 Route.get('/', async ({ view }) => {
   return view.render('welcome')
 })
+Route.get('/password/forgot', 'passwordResetController.forgot').as('password.forgot').middleware('guest')
+Route.get('/password/reset/:token', 'passwordResetController.reset').as('password.reset').middleware('guest')
 Route.get('/profile/:name', 'ProfilesController.show').as('profiles.show').middleware('auth')
 Route.get('/profile/:name/edit', 'ProfilesController.edit').as('settings').middleware('auth')
 Route.get('/scraper', 'ScraperController.show').as('scraper').middleware('auth')
@@ -28,6 +30,8 @@ Route.get('/login', async ({ view }) => {
 
 //API ROUTES
 Route.group(() => {
+  Route.post('/password/send', 'passwordResetController.send').as('password.send').middleware('guest')
+  Route.post('/password/store', 'passwordResetController.store').as('password.store').middleware('guest')
   Route.post('/register', 'AuthController.register').as('auth.register').middleware('guest')
   Route.post('/login', 'AuthController.login').as('auth.login').middleware('guest')
   Route.patch('/profile', 'ProfilesController.update').as('profiles.update').middleware('auth')
