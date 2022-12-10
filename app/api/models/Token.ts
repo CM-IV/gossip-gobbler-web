@@ -3,6 +3,8 @@ import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import { string } from "@ioc:Adonis/Core/Helpers"
 import User from './User'
 
+type TokenType = 'PASSWORD_RESET' | 'VERIFY_EMAIL'
+
 export default class Token extends BaseModel {
   @column({ isPrimary: true })
   public id: number
@@ -28,6 +30,19 @@ export default class Token extends BaseModel {
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>
 
+  public static async generateVerifyEmailToken(user: User) {
+    const token = string.generateRandom(64)
+
+    await Token.expireTokens(user, 'verifyEmailTokens')
+    const record = await user.related('tokens').create({
+      type: 'VERIFY_EMAIL',
+      expiresAt: DateTime.now().plus({ hours: 12 }),
+      token
+    })
+
+    return record.token
+  }
+
   public static async generatePasswordResetToken(user: User | null) {
     const token = string.generateRandom(64)
 
@@ -35,7 +50,7 @@ export default class Token extends BaseModel {
       return token
     }
 
-    await Token.expirePasswordResetTokens(user)
+    await Token.expireTokens(user, 'passwordResetTokens')
 
     const record = await user.related('tokens').create({
       type: 'PASSWORD_RESET',
@@ -46,16 +61,17 @@ export default class Token extends BaseModel {
     return record.token
   }
 
-  public static async expirePasswordResetTokens(user: User) {
-    await user.related('passwordResetTokens').query().update({
+  public static async expireTokens(user: User, relationName: 'passwordResetTokens' | 'verifyEmailTokens') {
+    await user.related(relationName).query().update({
       expiresAt: DateTime.now()
     })
   }
 
-  public static async getPasswordResetUser(token: string) {
+  public static async getTokenUser(token: string, type: TokenType) {
     const record = await Token.query()
       .preload('user')
       .where('token', token)
+      .where('type', type)
       .where('expiresAt', '>', DateTime.now().toSQL())
       .orderBy('createdAt', 'desc')
       .first()
@@ -63,10 +79,11 @@ export default class Token extends BaseModel {
     return record?.user
   }
 
-  public static async verify(token: string) {
+  public static async verify(token: string, type: TokenType) {
     const record = await Token.query()
       .where('expiresAt', '>', DateTime.now().toSQL())
       .where('token', token)
+      .where('type', type)
       .first()
 
     return !!record

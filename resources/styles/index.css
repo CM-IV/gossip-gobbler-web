@@ -20,6 +20,15 @@ body {
   margin-top: 20px;
 }
 
+#verifyNotify {
+  position: absolute;
+  left: 0;
+  right: auto;
+  max-width: 20%;
+  margin-right: 20px;
+  margin-top: 20px;
+}
+
 .is-disabled {
   background-color: #f0f0f0;
   opacity: 0.5;

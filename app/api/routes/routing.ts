@@ -11,12 +11,15 @@
 import Route from '@ioc:Adonis/Core/Route'
 import HealthCheck from '@ioc:Adonis/Core/HealthCheck'
 
-//VIEWS
 Route.get('/', async ({ view }) => {
   return view.render('welcome')
 })
 Route.get('/password/forgot', 'passwordResetController.forgot').as('password.forgot').middleware('guest')
 Route.get('/password/reset/:token', 'passwordResetController.reset').as('password.reset').middleware('guest')
+
+Route.get('/verify/email', 'verifyEmailController.index').as('verify.email')
+Route.get('/verify/email/:token', 'verifyEmailController.verify').as('verify.email.verify')
+
 Route.get('/profile/:name', 'ProfilesController.show').as('profiles.show').middleware('auth')
 Route.get('/profile/:name/edit', 'ProfilesController.edit').as('settings').middleware('auth')
 Route.get('/scraper', 'ScraperController.show').as('scraper').middleware('auth')

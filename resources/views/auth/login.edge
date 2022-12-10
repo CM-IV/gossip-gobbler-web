@@ -3,10 +3,10 @@
 
 @section('body')
     <main>
-        @if(flashMessages.has('message'))
+        @if(flashMessages.has('success'))
         <div id="loginNotify" class="notification is-success is-justify-content-right">
             <button class="delete" aria-label="delete" onclick="this.parentNode.style.display='none'"></button>
-            <p>{{ flashMessages.get('message') }}</p>
+            <p>{{ flashMessages.get('success') }}</p>
         </div>
         @end
         <div class="columns is-centered">

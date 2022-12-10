@@ -36,9 +36,11 @@ export default class AuthController {
     const user = await User.create({ email, username, password })
     await user.related('profile').create({ name: username })
 
-    session.flash('message', 'Registration Successful')
+    await user.sendVerifyEmail()
 
-    return response.redirect('/login')
+    session.flash('message', 'Registration successful, please verify your email')
+
+    return response.redirect().toRoute('verify.email')
   }
 
   public async login({ request, response, session, auth }: HttpContextContract) {
@@ -47,11 +49,16 @@ export default class AuthController {
     try {
       await auth.use('web').attempt(uid, password)
 
+      if (auth.user?.isEmailVerified === false) {
+        session.flash('info', 'Please verify your email')
+      }
+
       return response.redirect('/')
     } catch {
       session.flash('errors', {
         title: 'Username, email, or password is incorrect',
       })
+
       return response.redirect().back()
     }
   }
