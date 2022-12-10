@@ -1,0 +1,33 @@
+@layout('layouts/mainLayout')
+@set('title', 'Forgot Password')
+
+
+@section('body')
+  <main>
+    @if(flashMessages.has('message'))
+        <div id="loginNotify" class="notification is-success is-justify-content-right">
+            <button class="delete" aria-label="delete" onclick="this.parentNode.style.display='none'"></button>
+            <p>{{ flashMessages.get('message') }}</p>
+        </div>
+    @end
+    @if(flashMessages.has('errors'))
+        <div id="loginNotify" class="notification is-danger is-justify-content-right">
+            <button class="delete" aria-label="delete" onclick="this.parentNode.style.display='none'"></button>
+            <p>{{ flashMessages.get('errors.title') }}</p>
+        </div>
+    @end
+    <div class="columns is-centered">
+        <div class="column is-half">
+            <div class="box mt-6">
+                @if(auth.isLoggedIn && auth.user?.isEmailVerified)
+                    @set('profile', await auth.user?.related('profile').query().first())
+                    <p class="title">You are already a verified user, go to your <a href="{{ route('profiles.show', { name: encodeURIComponent(profile.name) }) }}">profile</a></p>
+                @else
+                    <p class="title">Please verify your email address</p>
+                    <p class="subtitle">A link has been sent to your email address</p>
+                @end
+            </div>
+        </div>
+    </div>
+  </main>
+@end
