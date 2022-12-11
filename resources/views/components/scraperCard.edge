@@ -2,6 +2,18 @@
     <div class="card-content">
         @forms.post({ action: route('scraper.scrapeData') })
             <div class="field">
+                <label class="label">What to Scrape</label>
+                <div class="control">
+                    <div class="select">
+                        <select name="selection">
+                            <option>old.reddit.com posts</option>
+                            <option>dev.to posts</option>
+                        </select>
+                    </div>
+                </div>
+          </div>
+
+            <div class="field">
                 <label class="label">Name</label>
                 <div class="control">
                     <input
@@ -13,13 +25,13 @@
                 </div>
             </div>
             <div class="field">
-                <label class="label">Reddit URL to Scrape</label>
+                <label class="label">URL to Scrape</label>
                 <div class="control">
                     <input
                         class="input"
                         name="scrapeUrl"
                         type="url"
-                        placeholder="https://old.reddit.com/r/amd"
+                        placeholder="https://old.reddit.com/r/amd/"
                     />
                 </div>
             </div>
