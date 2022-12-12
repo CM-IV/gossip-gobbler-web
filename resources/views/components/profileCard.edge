@@ -1,5 +1,5 @@
 @set('date', new Date(profile.createdAt))
-@set('profileInfo', await auth.user.related('profile').query().first())
+@set('profileInfo', await auth.user?.related('profile').query().first())
 
 
 <div class="card">

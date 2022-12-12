@@ -1,4 +1,4 @@
-<nav class="navbar is-hidden-fullhd is-hidden-widescreen is-hidden-desktop" role="navigation" aria-label="main navigation">
+<nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a href="/" class="navbar-item">
         <strong>Gossip Gobbler</strong>
@@ -12,9 +12,7 @@
         <span></span>
     </label>
 
-    <div id="navMenu" class="navbar-menu is-mobile">
-        <div class="navbar-start">
-            {{{ await $slots.links() }}}
-        </div>
+    <div id="navMenu" class="navbar-menu">
+        {{{ await $slots.links() }}}
     </div>
 </nav>

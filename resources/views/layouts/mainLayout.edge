@@ -12,35 +12,62 @@
     <body>
         @component('components/nav')
             @slot('links')
-                @if(auth.user)
-                    <a href="/" class="navbar-item">
-                        Home
-                    </a>
-                    @if(auth.user?.isAdmin)
-                        <a class="navbar-item" href="{{ route('users.manage') }}" aria-current="page">Manage Users</a>
-                    @end
-                    <a href="{{ route('profiles.show', { name: profileInfo.name }) }}" class="navbar-item">
-                        Dashboard
-                    </a>
-                    <a class="navbar-item" href="{{ route('scraper') }}">Scraper</a>
-                    <a class="navbar-item" href="{{ route('auth.logout') }}">Logout</a>
+                @if(auth.isLoggedIn)
+                    <div class="navbar-start">
+                        <a href="/" class="navbar-item">
+                            Home
+                        </a>
+                        <a href="{{ route('profiles.show', { name: profileInfo.name }) }}" class="navbar-item is-hidden-fullhd is-hidden-widescreen is-hidden-desktop is-hidden-tablet">
+                            Profile
+                        </a>
+                        @if(auth.user?.isAdmin)
+                            <a class="navbar-item" href="{{ route('users.manage') }}" aria-current="page">Manage Users</a>
+                        @end
+                        <a class="navbar-item" href="{{ route('scraper') }}">Scraper</a>
+                    </div>
+                    <div class="navbar-end">
+                        <div class="field is-grouped">
+                            @if(profileInfo.avatar)
+                            <div class="navbar-item is-hidden-touch">
+                                <figure class="image is-64x64">
+                                    <a href="{{ route('profiles.show', { name: profileInfo.name }) }}" class="navbar-item">
+                                        <img class="is-rounded" src="{{ profileInfo.avatar }}" alt="avatar image" width={64}>
+                                    </a>
+                                </figure>
+                            </div>
+                            @end
+                            <div class="navbar-item">
+                                <div class="buttons">
+                                    <a href="{{ route('auth.logout') }}" class="button is-danger">
+                                        Log out
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @else
-                    <a href="/" class="navbar-item">Home</a>
-                    <a href="/register" class="navbar-item">
-                        Sign Up
-                    </a>
-                    <a href="/login" class="navbar-item">
-                        Log in
-                    </a>
+                    <div class="navbar-start">
+                        <a href="/" class="navbar-item">Home</a>
+                    </div>
+                    <div class="navbar-end">
+                        <div class="navbar-item">
+                          <div class="buttons">
+                            <a href="/register" class="button is-primary">
+                                Sign Up
+                            </a>
+                            <a href="/login" class="button is-light">
+                                Log in
+                            </a>
+                          </div>
+                        </div>
+                    </div>
                 @end
             @end
         @end
         <div class="columns is-centered">
             <div class="column is-full">
                 @!section('body')
-                <div class="container mt-6">
-                    @!component('components/footer')
-                </div>
+                @!component('components/footer')
             </div>
         </div>
     </body>
