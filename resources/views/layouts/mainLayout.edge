@@ -17,7 +17,7 @@
                         <a href="/" class="navbar-item">
                             Home
                         </a>
-                        <a href="{{ route('profiles.show', { name: profileInfo.name }) }}" class="navbar-item is-hidden-fullhd is-hidden-widescreen is-hidden-desktop is-hidden-tablet">
+                        <a href="{{ route('profiles.show', { name: profileInfo.name }) }}" class="navbar-item">
                             Profile
                         </a>
                         @if(auth.user?.isAdmin)
