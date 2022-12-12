@@ -14,28 +14,9 @@
         <div class="columns is-vcentered">
           <div class="column is-half">
             <h1 class="title"><span class="text-gradient">Gossip </span>Gobbler</h1>
-            @if(auth.isLoggedIn)
-              <div class="content is-hidden-mobile is-hidden-tablet-only">
-                <div class="buttons">
-                    <a href="{{ route('profiles.show', { name: auth.user?.username }) }}" class="button is-rounded is-success">
-                        Profile
-                    </a>
-                    <a class="button is-rounded is-danger" href="{{ route('auth.logout') }}">Logout</a>
-                </div>
-              </div>
-            @else
-              <div class="content is-hidden-mobile is-hidden-tablet-only">
-                <p>Scrape html from static websites and specify what data to view.</p>
-                <div class="buttons">
-                    <a href="/register" class="button is-rounded is-success">
-                        Sign Up
-                    </a>
-                    <a href="/login" class="button is-rounded is-info">
-                        Log in
-                    </a>
-                </div>
-              </div>
-            @end
+            <div class="content is-hidden-mobile is-hidden-tablet-only">
+              <p>Scrape html from static websites and specify what data to view.</p>
+            </div>
           </div>
           <div class="column is-half">
               <figure class="image">
