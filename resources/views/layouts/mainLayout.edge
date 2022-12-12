@@ -22,6 +22,7 @@
                     <a href="{{ route('profiles.show', { name: profileInfo.name }) }}" class="navbar-item">
                         Dashboard
                     </a>
+                    <a class="navbar-item" href="{{ route('scraper') }}">Scraper</a>
                     <a class="navbar-item" href="{{ route('auth.logout') }}">Logout</a>
                 @else
                     <a href="/" class="navbar-item">Home</a>
