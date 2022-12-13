@@ -52,10 +52,23 @@ export default class ScraperController {
             }
 
             $("div.crayons-story").each((_i, el) => {
+
+                const link = "https://dev.to"
+                const title = $(el).find("a.crayons-story__hidden-navigation-link").text();
+                const author = $(el).find("button.profile-preview-card__trigger").text().trim();
+                const url = $(el).find("a").attr('href');
+                let reactions = $(el).find("a.crayons-btn").contents().text();
+                let votes = '0';
+
+                if (reactions.includes("reaction")) {
+                    votes = reactions.match(/\d+/)![0]
+                }
+
                 posts.push({
-                    title: $(el).find("a.crayons-story__hidden-navigation-link").text(),
-                    author: $(el).find("button.profile-preview-card__trigger").text().trim(),
-                    votes: $(el).find("a.crayons-btn").text().replace(/\n/g,'').match(/(\d+)/)![0],
+                    title: title,
+                    author: author,
+                    url: link + url,
+                    votes: votes,
                 })
             }) 
 
