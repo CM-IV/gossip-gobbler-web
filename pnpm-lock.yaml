@@ -16,6 +16,7 @@ specifiers:
   '@japa/preset-adonis': ^1.2.0
   '@japa/runner': ^2.2.2
   '@symfony/webpack-encore': 4.1.1
+  '@types/papaparse': ^5.3.5
   '@types/proxy-addr': ^2.0.0
   '@types/source-map-support': ^0.5.6
   adonis-preset-ts: ^2.1.0
@@ -29,6 +30,7 @@ specifiers:
   eslint-plugin-adonis: ^2.1.1
   eslint-plugin-prettier: ^4.2.1
   luxon: ^3.1.0
+  papaparse: ^5.3.2
   pg: ^8.8.0
   phc-argon2: ^1.1.4
   pino-pretty: ^9.1.1
@@ -59,6 +61,7 @@ dependencies:
   cheerio: 1.0.0-rc.12
   deta: 1.1.0
   luxon: 3.1.1
+  papaparse: 5.3.2
   pg: 8.8.0
   phc-argon2: 1.1.4
   proxy-addr: 2.0.7
@@ -73,6 +76,7 @@ devDependencies:
   '@japa/preset-adonis': 1.2.0_psmfw5uj26lvxnodlskuo2aapm
   '@japa/runner': 2.2.2
   '@symfony/webpack-encore': 4.1.1_yxe6faxbe2o5ao3uqxwjw72rj4
+  '@types/papaparse': 5.3.5
   '@types/proxy-addr': 2.0.0
   '@types/source-map-support': 0.5.6
   adonis-preset-ts: 2.1.0
@@ -2465,6 +2469,12 @@ packages:
 
   /@types/node/18.11.11:
     resolution: {integrity: sha512-KJ021B1nlQUBLopzZmPBVuGU9un7WJd/W4ya7Ih02B4Uwky5Nja0yGYav2EfYIk0RR2Q9oVhf60S2XR1BCWJ2g==}
+
+  /@types/papaparse/5.3.5:
+    resolution: {integrity: sha512-R1icl/hrJPFRpuYj9PVG03WBAlghJj4JW9Py5QdR8FFSxaLmZRyu7xYDCCBZIJNfUv3MYaeBbhBoX958mUTAaw==}
+    dependencies:
+      '@types/node': 18.11.11
+    dev: true
 
   /@types/parse-json/4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
@@ -7025,6 +7035,10 @@ packages:
 
   /packet-reader/1.0.0:
     resolution: {integrity: sha512-HAKu/fG3HpHFO0AA8WE8q2g+gBJaZ9MG7fcKk+IJPLTGAD6Psw4443l+9DGRbOIh3/aXr7Phy0TjilYivJo5XQ==}
+    dev: false
+
+  /papaparse/5.3.2:
+    resolution: {integrity: sha512-6dNZu0Ki+gyV0eBsFKJhYr+MdQYAzFUGlBMNj3GNrmHxmz1lfRa24CjFObPXtjcetlOv5Ad299MhIK0znp3afw==}
     dev: false
 
   /param-case/3.0.4:
