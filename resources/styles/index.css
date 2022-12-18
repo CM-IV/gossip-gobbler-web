@@ -12,12 +12,14 @@ body {
   height: 100vh;
 }
 
-#loginNotify {
-  position: absolute;
-  right: 0;
-  max-width: 20%;
-  margin-right: 20px;
-  margin-top: 20px;
+@media only screen and (min-width: 600px) {
+  #loginNotify {
+    position: absolute;
+    right: 0;
+    max-width: 20%;
+    margin-right: 20px;
+    margin-top: 20px;
+  }
 }
 
 #verifyNotify {
