@@ -1,0 +1,36 @@
+<div class="card">
+    <div class="card-content">
+        <div class="field">
+            <label class="label">Scrape Data Files</label>
+            <div class="control">
+                <div class="table-container">
+                    <table class="table is-bordered is-fullwidth is-hoverable is-striped">
+                        <thead>
+                            <tr>
+                                <th>File</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @each(file in filteredFiles)
+                            <tr>
+                                <td>{{ file }}</td>
+                                <td>
+                                    <div class="field is-grouped">
+                                        <a class="button is-success is-rounded" href="{{ route('scraper.scrapeJsonData', { name: file }) }}" download>Download</a>
+                                        @forms.delete({ action: route('scraper.delJsonData', { name: file }) })
+                                            <button class="button is-rounded is-warning ml-2" type="button" onclick="confirm('Are you sure?') && this.form.submit()">
+                                                Delete
+                                            </button>
+                                        @end
+                                    </div>
+                                </td>
+                            </tr>
+                            @endeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+@layout('layouts/mainLayout')
+@set('title', 'Dashboard')
+
+@section('body')
+  <main>
+      @if(auth.user?.isAdmin)
+        <section class="section">
+          <h1 class="title">Welcome Admin {{ profile.name }}!</h1>
+        </section>
+        <section class="section">
+          <div class="columns">
+            <div class="column is-one-quarter">
+              @!adminMenu({ profile: profile })
+            </div>
+            <div class="column">
+              <div class="columns is-centered">
+                <div class="column is-three-fifths">
+                  @!profileCard({
+                    profile: profile,
+                    totalScrapes: totalScrapes
+                  })
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      @else
+        <section class="section">
+          <h1 class="title">Welcome {{ profile.name }}!</h1>
+        </section>
+        <section class="section">
+          <div class="columns">
+            <div class="column is-one-quarter">
+              @!menu({ profile: profile })
+            </div>
+            <div class="column">
+              <div class="columns is-centered">
+                <div class="column is-three-fifths">
+                  @!profileCard({
+                    profile: profile,
+                    totalScrapes: totalScrapes
+                  })
+                </div>
+              </div>
+            </div>
+        </section>
+      @end
+  </main>
+@end

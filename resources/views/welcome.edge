@@ -3,33 +3,20 @@
 
 @section('body')
   <main>
+    @if(flashMessages.has('info'))
+        <div id="verifyNotify" class="notification is-info is-justify-content-right ml-2">
+            <button class="delete" aria-label="delete" onclick="this.parentNode.style.display='none'"></button>
+            <p>{{ flashMessages.get('info') }} and click this <a href="{{ route('verify.email') }}">link</a></p>
+        </div>
+    @end
     <section class="section">
       <div class="container">
         <div class="columns is-vcentered">
           <div class="column is-half">
             <h1 class="title"><span class="text-gradient">Gossip </span>Gobbler</h1>
-            @if(auth.user)
-              <div class="content is-hidden-mobile is-hidden-tablet-only">
-                <div class="buttons">
-                    <a href="dashboard" class="button is-rounded is-success">
-                        Dashboard
-                    </a>
-                    <a class="button is-rounded is-danger" href="{{ route('auth.logout') }}">Logout</a>
-                </div>
-              </div>
-            @else
-              <div class="content is-hidden-mobile is-hidden-tablet-only">
-                <p>Scrape html from static websites and specify what data to view.</p>
-                <div class="buttons">
-                    <a href="/register" class="button is-rounded is-success">
-                        Sign Up
-                    </a>
-                    <a href="/login" class="button is-rounded is-info">
-                        Log in
-                    </a>
-                </div>
-              </div>
-            @end
+            <div class="content is-hidden-mobile is-hidden-tablet-only">
+              <p>Scrape html from static websites and specify what data to view.</p>
+            </div>
           </div>
           <div class="column is-half">
               <figure class="image">

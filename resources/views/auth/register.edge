@@ -7,8 +7,32 @@
             <div class="column is-half">
                 <div class="box mt-6">
                     <p class="title">Register</p>
-                    <form action="{{ route('auth.register') }}" method="POST">
-                        {{ csrfField() }}
+                    @if(flashMessages.has('errors.passwordConfirmation'))
+                        <div id="notify" class="notification is-danger">
+                            <button class="delete" onclick="this.parentNode.style.display='none'"></button>
+                            <p>{{ flashMessages.get('errors.passwordConfirmation') }}</p>
+                        </div>
+                    @end
+                    @if(flashMessages.has('errors.email'))
+                        <div id="notify" class="notification is-danger">
+                            <button class="delete" onclick="this.parentNode.style.display='none'"></button>
+                            <p>{{ flashMessages.get('errors.email') }}</p>
+                        </div>
+                    @end
+                    @if(flashMessages.has('errors.username'))
+                        <div id="notify" class="notification is-danger">
+                            <button class="delete" onclick="this.parentNode.style.display='none'"></button>
+                            <p>{{ flashMessages.get('errors.username') }}</p>
+                        </div>
+                    @end
+                    @if(flashMessages.has('errors.password'))
+                        <div id="notify" class="notification is-danger">
+                            <button class="delete" onclick="this.parentNode.style.display='none'"></button>
+                            <p>{{ flashMessages.get('errors.password') }}</p>
+                        </div>
+                    @end
+
+                    @forms.post({ action: route('auth.register') })
                         <div class="field">
                             <label class="label">Email</label>
                             <div class="control">
@@ -70,7 +94,7 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    @end
                 </div>
             </div>
         </div>

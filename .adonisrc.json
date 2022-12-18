@@ -4,7 +4,8 @@
     "./commands",
     "@adonisjs/core/build/commands/index.js",
     "@adonisjs/repl/build/commands",
-    "@adonisjs/lucid/build/commands"
+    "@adonisjs/lucid/build/commands",
+    "@adonisjs/mail/build/commands"
   ],
   "exceptionHandlerNamespace": "App/Exceptions/Handler",
   "directories": {
@@ -33,7 +34,8 @@
     "@adonisjs/shield",
     "@adonisjs/lucid",
     "@adonisjs/auth",
-    "adonis5-prometheus"
+    "adonis5-prometheus",
+    "@adonisjs/mail"
   ],
   "metaFiles": [
     {

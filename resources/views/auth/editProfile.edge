@@ -1,0 +1,105 @@
+@layout('layouts/mainLayout')
+@set('title', 'Edit Profile')
+
+
+@section('body')
+    <main>
+        <section class="section">
+            <h1 class="title">Edit Profile</h1>
+        </section>
+        <section class="section">
+            <div class="columns is-centered">
+                <div class="column is-half">
+                    <div class="field">
+                        <p class="control">
+                            <a href="{{ route('profiles.show', { name: profileInfo.name }) }}" class="button">
+                                Go Back
+                            </a>
+                        </p>
+                    </div>
+                    @forms.patch({ action: route('profiles.update') })
+                        <div class="field">
+                            <label class="label">Avatar</label>
+                            <div class="control">
+                                <input
+                                    class="input"
+                                    name="avatar"
+                                    type="text"
+                                    placeholder="Avatar URL"
+                                    value="{{ profile.avatar == null ? '' : profile.avatar }}"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Name</label>
+                            <div class="control">
+                                <input
+                                    class="input"
+                                    type="text"
+                                    name="name"
+                                    placeholder="John Doe"
+                                    value="{{ profile.name }}"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Bio</label>
+                            <div class="control">
+                                <textarea class="textarea has-fixed-size" name="bio" rows="10" placeholder="Bio about you" >{{ profile.bio == null ? '' : profile.bio }}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Email</label>
+                            <div class="control">
+                                <input
+                                    class="input"
+                                    type="email"
+                                    name="email"
+                                    value="{{ profile.user.email }}"
+                                    placeholder="testuser@email.com"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Change Password</label>
+                            <div class="control">
+                                <input
+                                    class="input"
+                                    type="password"
+                                    name="password"
+                                    placeholder="New Password"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Confirm Changed Password</label>
+                            <div class="control">
+                                <input
+                                    class="input"
+                                    name="passwordConfirmation"
+                                    type="password"
+                                    placeholder="Confirm New Password"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="item">
+                                <div class="updateButton">
+                                    <button class="button is-primary" type="submit">
+                                    Update Profile
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    @end
+                </div>
+            </div>
+        </section>
+    </main>
+@end

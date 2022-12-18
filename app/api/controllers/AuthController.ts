@@ -3,7 +3,7 @@ import { schema, rules } from '@ioc:Adonis/Core/Validator'
 import User from '../models/User'
 
 export default class AuthController {
-  public async register({ request, response, auth }: HttpContextContract) {
+  public async register({ request, response, session }: HttpContextContract) {
     const userSchema = schema.create({
       email: schema.string({ trim: true }, [
         rules.required(),
@@ -21,12 +21,26 @@ export default class AuthController {
       ]),
     })
 
-    const payload = await request.validate({ schema: userSchema })
-    const user = await User.create(payload)
+    const { email, username, password } = await request.validate({ 
+      schema: userSchema,
+      messages: {
+        required: "The {{ field }} is required to register a new account.",
+        confirmed: "The password fields do not match.",
+        "username.unique": "That username is already in use",
+        "email.email": "Enter a valid email address",
+        "email.unique": "That email is already in use",
+        "password.minLength":
+          "The minimum characters in your password must be greater than or equal to 8.",
+      },
+    })
+    const user = await User.create({ email, username, password })
+    await user.related('profile').create({ name: username })
 
-    await auth.login(user)
+    await user.sendVerifyEmail()
 
-    return response.redirect('/dashboard')
+    session.flash('message', 'Registration successful, please verify your email')
+
+    return response.redirect().toRoute('verify.email')
   }
 
   public async login({ request, response, session, auth }: HttpContextContract) {
@@ -35,11 +49,16 @@ export default class AuthController {
     try {
       await auth.use('web').attempt(uid, password)
 
-      return response.redirect('/dashboard')
+      if (auth.user?.isEmailVerified === false) {
+        session.flash('info', 'Please verify your email')
+      }
+
+      return response.redirect('/')
     } catch {
       session.flash('errors', {
         title: 'Username, email, or password is incorrect',
       })
+
       return response.redirect().back()
     }
   }

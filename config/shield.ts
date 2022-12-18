@@ -91,7 +91,7 @@ export const csrf: ShieldConfig['csrf'] = {
 	| ```
   |
   */
-  exceptRoutes: ['/api/metrics'],
+  exceptRoutes: ['/metrics'],
 
   /*
   |--------------------------------------------------------------------------

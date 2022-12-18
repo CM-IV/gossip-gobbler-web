@@ -1,89 +1,77 @@
 @layout('layouts/mainLayout')
 @set('title', 'Manage Users')
+@set('profile', await auth.user?.related('profile').query().first())
 
 @section('body')
-    <section class="section">
-        <h1 class="title">Manage Users</h1>
-    </section>
-    <section class="section">
-        <div class="columns is-centered">
-            <div class="column is-one-quarter">
-              @component('components/menu')
-                @slot('links')
-                <p class="menu-label">
-                  Admin
-                </p>
-                <ul class="menu-list">
-                  <li><a href="{{ route('users.manage') }}" aria-current="page">Manage Users</a></li>
-                </ul>
-                <p class="menu-label">
-                  Navigation
-                </p>
-                <ul class="menu-list">
-                  <li><a href="/">Home</a></li>
-                  <li><a href="dashboard">Dashboard</a></li>
-                  <li><a href="{{ route('auth.logout') }}">Logout</a></li>
-                </ul>
-                @end
-              @end
-            </div>
-            <div class="column">
-                <div class="container">
-                    <div class="table-container">
-                        <table class="table is-bordered is-striped">
-                            <thead>
-                                <tr>
-                                    <th>Username</th>
-                                    <th>Role</th>
-                                    <th>Email</th>
-                                    <th>Joined</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @each(user in users.data)
-                                <tr>
-                                    <td>
-                                        {{ user.username }}
-                                        @if(user.id === auth.user?.id)
-                                        (You)
-                                        @end
-                                    </td>
-                                    <td>
-                                        <form action="{{ route('role', { id: user.id }, { qs: { _method: 'PATCH' } }) }}" method="POST">
-                                            {{ csrfField() }}
-                                            <div class="select">
-                                                <select name="roleId" onchange="this.form.submit()">
-                                                @each(role in roles)
-                                                    <option value="{{ role.id }}" {{ role.id === user.role_id ? "selected" : "" }}>
-                                                        {{ role.role }}
-                                                    </option>
+    <main>
+        <section class="section">
+            <h1 class="title">Manage Users</h1>
+        </section>
+        <section class="section">
+            <div class="columns">
+                <div class="column is-one-quarter">
+                  @!adminMenu({ profile: profile })
+                </div>
+                <div class="column">
+                    <div class="columns is-centered">
+                        <div class="column is-three-fifths">
+                            <div class="table-container">
+                                <table class="table is-bordered is-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Username</th>
+                                            <th>Role</th>
+                                            <th>Email</th>
+                                            <th>Joined</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @each(user in users.data)
+                                        <tr>
+                                            <td>
+                                                {{ user.username }}
+                                                @if(user.id === auth.user?.id)
+                                                    (You)
                                                 @end
-                                                </select>
-                                            </div>
-                                        </form>
-                                    </td>
-                                    <td>{{ user.email }}</td>
-                                    @set('date', new Date(user.created_at))
-                                    <td>{{ date.toDateString() }}</td>
-                                    <td>
-                                        <form action="{{ route('destroy', { id: user.id }, { qs: { _method: 'DELETE' } }) }}" method="post">
-                                            {{ csrfField() }}
-                                            <button class="button is-rounded is-warning" type="button" onclick="confirm('Are you sure?') && this.form.submit()">
-                                                Delete
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                @endeach
-                            </tbody>
-                        </table>
+                                            </td>
+                                            <td>
+                                                @forms.patch({ action: route('role', { id: user.id }) })
+                                                    <div class="select">
+                                                        <select name="roleId" onchange="this.form.submit()">
+                                                        @each(role in roles)
+                                                            <option value="{{ role.id }}" {{ role.id === user.role_id ? "selected" : "" }}>
+                                                                {{ role.role }}
+                                                            </option>
+                                                        @endeach
+                                                        </select>
+                                                    </div>
+                                                @end
+                                            </td>
+                                            <td>{{ user.email }}</td>
+                                            @set('date', new Date(user.created_at))
+                                            <td>{{ date.toDateString() }}</td>
+                                            <td>
+                                                @forms.delete({ action: route('destroy', { id: user.id }) })
+                                                    <button class="button is-rounded is-warning" type="button" onclick="confirm('Are you sure?') && this.form.submit()">
+                                                        Delete
+                                                    </button>
+                                                @end
+                                            </td>
+                                        </tr>
+                                        @endeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            @if(users.meta.total > users.meta.per_page)
+                                @!paginator({
+                                    pagination: users
+                                })
+                            @end
+                        </div>
                     </div>
-                    @if(users.meta.total > users.meta.per_page)
-                        @!component('components/paginator', pagination = users)
-                    @end
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 @end

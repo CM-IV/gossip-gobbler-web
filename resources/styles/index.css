@@ -1,8 +1,40 @@
 @import './bulma.min.css';
+@import './fork-awesome.min.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 html,
 body {
   height: 100vh;
+}
+
+@media only screen and (min-width: 600px) {
+  #loginNotify {
+    position: absolute;
+    right: 0;
+    max-width: 20%;
+    margin-right: 20px;
+    margin-top: 20px;
+  }
+}
+
+#verifyNotify {
+  position: absolute;
+  left: 0;
+  right: auto;
+  max-width: 20%;
+  margin-right: 20px;
+  margin-top: 20px;
+}
+
+.is-disabled {
+  background-color: #f0f0f0;
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .navbar-burger-toggle + .navbar-burger {

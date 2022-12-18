@@ -1,0 +1,75 @@
+@layout('layouts/mainLayout')
+@set('title', 'Reddit Scraper')
+@set('profile', await auth.user?.related('profile').query().first())
+@set('error', flashMessages.get('errors.title') )
+
+
+@section('body')
+  <main>
+    <section class="section">
+        <h1 class="title">Scraper</h1>
+    </section>
+    <section class="section">
+        @if(auth.user?.isAdmin)
+          <div class="columns">
+            <div class="column is-one-quarter">
+              @!adminMenu({ profile: profile })
+            </div>
+            <div class="column">
+              <div class="columns is-centered">
+                <div class="column is-three-fifths">
+                  @if(flashMessages.has('errors'))
+                    <div id="notify" class="notification is-danger">
+                      <button class="delete" onclick="this.parentNode.style.display='none'"></button>
+                      <p>{{ flashMessages.get('errors.title') }}</p>
+                    </div>
+                  @elseif(flashMessages.has('message'))
+                    <div class="notification is-success">
+                      <button class="delete" aria-label="delete" onclick="this.parentNode.style.display='none'"></button>
+                      <p>{{ flashMessages.get('message') }}</p>
+                    </div>
+                  @end
+                  @!scraperCard()
+
+                  <br/>
+
+                  @if(filteredFiles.length > 0)
+                    @!displayJson({ filteredFiles: filteredFiles })
+                  @end
+                </div>
+              </div>
+            </div>
+          </div>
+      @else
+        <div class="columns">
+        <div class="column is-one-quarter">
+            @!menu({ profile: profile })
+        </div>
+        <div class="column">
+            <div class="columns is-centered">
+              <div class="column is-three-fifths">
+                @if(flashMessages.has('errors'))
+                  <div id="notify" class="notification is-danger">
+                      <button class="delete" onclick="this.parentNode.style.display='none'"></button>
+                      <p>{{ flashMessages.get('errors.title') }}</p>
+                  </div>
+                @elseif(flashMessages.has('message'))
+                  <div class="notification is-success">
+                      <button class="delete" aria-label="delete" onclick="this.parentNode.style.display='none'"></button>
+                      <p>{{ flashMessages.get('message') }}</p>
+                  </div>
+                @end
+                @!scraperCard({ error: error })
+
+                <br/>
+
+                @if(filteredFiles.length > 0 && auth.user?.isCustomer)
+                  @!displayJson({ filteredFiles: filteredFiles })
+                @end
+              </div>
+            </div>
+        </div>
+      @end
+    </section>
+  </main>
+@end

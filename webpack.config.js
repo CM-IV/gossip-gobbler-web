@@ -45,7 +45,7 @@ Encore.setPublicPath('/assets')
 | entrypoints.
 |
 */
-Encore.addEntry('app', './resources/styles/index.css')
+Encore.addStyleEntry('styles', './resources/styles/index.css')
 
 /*
 |--------------------------------------------------------------------------
