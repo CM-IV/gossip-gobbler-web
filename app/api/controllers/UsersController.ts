@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
+import Papa from "papaparse"
 import Roles from '../enums/Role'
 import Role from '../models/Role'
 import User from '../models/User'
@@ -34,6 +35,21 @@ export default class UsersController {
     return isAuthUser && user.roleId !== Roles.ADMIN
       ? response.redirect('/')
       : response.redirect().back()
+  }
+
+  public async exportCsv({ response }: HttpContextContract) {
+    
+    const users = await User.query().orderBy('role_id').orderBy('username')
+
+    const data = users.map((user) => user.serialize())
+
+    const csv = Papa.unparse(data)
+
+    response.header("Content-Type", "text/csv")
+
+    response.attachment("users.csv")
+
+    return response.send(csv)
   }
 
   public async destroy({ response, params, auth }: HttpContextContract) {
