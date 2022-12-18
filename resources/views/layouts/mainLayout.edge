@@ -28,8 +28,8 @@
                     <div class="navbar-end">
                         <div class="field is-grouped">
                             @if(profileInfo.avatar)
-                            <div class="navbar-item is-hidden-touch">
-                                <figure class="image is-64x64">
+                            <div class="navbar-item is-hidden-touch mt-2">
+                                <figure class="image is-48x48">
                                     <a href="{{ route('profiles.show', { name: profileInfo.name }) }}" class="navbar-item">
                                         <img class="is-rounded" src="{{ profileInfo.avatar }}" alt="avatar image" width={64}>
                                     </a>
