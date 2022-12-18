@@ -30,7 +30,7 @@ export default class AuthController {
         "email.email": "Enter a valid email address",
         "email.unique": "That email is already in use",
         "password.minLength":
-          "The minimum characters in your password must be greater than or equal to 5.",
+          "The minimum characters in your password must be greater than or equal to 8.",
       },
     })
     const user = await User.create({ email, username, password })
