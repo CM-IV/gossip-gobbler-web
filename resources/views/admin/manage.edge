@@ -26,6 +26,7 @@
                                             <th>Role</th>
                                             <th>Email</th>
                                             <th>Joined</th>
+                                            <th>Verified</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -54,6 +55,7 @@
                                             <td>{{ user.email }}</td>
                                             @set('date', new Date(user.created_at))
                                             <td>{{ date.toDateString() }}</td>
+                                            <td>{{ user.is_email_verified }}</td>
                                             <td>
                                                 @forms.delete({ action: route('destroy', { id: user.id }) })
                                                     <button class="button is-rounded is-warning" type="button" onclick="confirm('Are you sure?') && this.form.submit()">

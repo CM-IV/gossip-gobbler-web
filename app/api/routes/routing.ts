@@ -14,6 +14,9 @@ import HealthCheck from '@ioc:Adonis/Core/HealthCheck'
 Route.get('/', async ({ view }) => {
   return view.render('welcome')
 })
+Route.get('/about', async ({ view }) => {
+  return view.render('about')
+})
 Route.get('/password/forgot', 'passwordResetController.forgot').as('password.forgot').middleware('guest')
 Route.get('/password/reset/:token', 'passwordResetController.reset').as('password.reset').middleware('guest')
 

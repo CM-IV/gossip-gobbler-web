@@ -6,6 +6,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Gossip Gobbler - a web scraper for static websites.">
+        <link rel="icon" type="image/x-icon" href="https://ik.imagekit.io/xbkhabiqcy9/img/favicon_DuXwGy1V-.png?ik-sdk-version=javascript-1.4.3&updatedAt=1638746946810" />
         <title>Gossip Gobbler</title>
         @entryPointStyles('styles')
     </head>
@@ -16,6 +17,9 @@
                     <div class="navbar-start">
                         <a href="/" class="navbar-item">
                             Home
+                        </a>
+                        <a href="/about" class="navbar-item">
+                            About
                         </a>
                         <a href="{{ route('profiles.show', { name: profileInfo.name }) }}" class="navbar-item">
                             Profile
@@ -46,6 +50,9 @@
                 @else
                     <div class="navbar-start">
                         <a href="/" class="navbar-item">Home</a>
+                        <a href="/about" class="navbar-item">
+                            About
+                        </a>
                     </div>
                     <div class="navbar-end">
                         <div class="navbar-item">
@@ -65,6 +72,18 @@
         <div class="columns is-centered">
             <div class="column is-full">
                 @!section('body')
+                @if(flashMessages.has('info'))
+                    <div id="verifyNotify" class="notification is-info is-justify-content-right ml-2">
+                        <button class="delete" aria-label="delete" onclick="this.parentNode.style.display='none'"></button>
+                        <p>{{ flashMessages.get('info') }} and click this <a href="{{ route('verify.email') }}">link</a></p>
+                    </div>
+                @end
+                @if(!auth.user)
+                    <div id="loginWarn" class="notification is-info is-justify-content-right ml-2">
+                        <button class="delete" aria-label="delete" onclick="this.parentNode.style.display='none'"></button>
+                        <p>Please <a href="/login">sign in</a> or <a href="/register">create an account</a></p>
+                    </div>
+                @end
                 @!component('components/footer')
             </div>
         </div>
