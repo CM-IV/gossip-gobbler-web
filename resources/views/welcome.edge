@@ -3,12 +3,6 @@
 
 @section('body')
   <main>
-    @if(flashMessages.has('info'))
-        <div id="verifyNotify" class="notification is-info is-justify-content-right ml-2">
-            <button class="delete" aria-label="delete" onclick="this.parentNode.style.display='none'"></button>
-            <p>{{ flashMessages.get('info') }} and click this <a href="{{ route('verify.email') }}">link</a></p>
-        </div>
-    @end
     <section class="section">
       <div class="container">
         <div class="columns is-vcentered">
