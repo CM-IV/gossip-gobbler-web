@@ -18,12 +18,25 @@
             <div class="column">
               <div class="columns is-centered">
                 <div class="column is-three-fifths">
-                  @if(flashMessages.has('errors'))
+                  @if(flashMessages.has('errors.title'))
                     <div id="notify" class="notification is-danger">
                       <button class="delete" onclick="this.parentNode.style.display='none'"></button>
-                      <p>{{ flashMessages.get('errors.title') }}</p>
+                      <p>There was an error!</p>
                     </div>
-                  @elseif(flashMessages.has('message'))
+                  @end
+                  @if(flashMessages.has('errors.scrapeUrl'))
+                    <div id="notify" class="notification is-danger">
+                      <button class="delete" onclick="this.parentNode.style.display='none'"></button>
+                      <p><strong>{{ flashMessages.get('errors.scrapeUrl') }}</strong></p>
+                      <p>Here are some example URLs to scrape:</p>
+                      <pre>
+                        <code>https://old.reddit.com/r/Monero/</code>
+                        <code>https://dev.to/top/year</code>
+                        <code>https://en.wikipedia.org/wiki/Ryzen</code>
+                      </pre>
+                    </div>
+                  @end
+                  @if(flashMessages.has('message'))
                     <div class="notification is-success">
                       <button class="delete" aria-label="delete" onclick="this.parentNode.style.display='none'"></button>
                       <p>{{ flashMessages.get('message') }}</p>
