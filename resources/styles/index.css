@@ -22,6 +22,17 @@ body {
   }
 }
 
+@media only screen and (min-width: 600px) {
+  #loginWarn {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    max-width: 20%;
+    margin-right: 20px;
+    margin-top: 20px;
+  }
+}
+
 #verifyNotify {
   position: absolute;
   left: 0;

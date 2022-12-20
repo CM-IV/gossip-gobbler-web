@@ -14,6 +14,9 @@ import HealthCheck from '@ioc:Adonis/Core/HealthCheck'
 Route.get('/', async ({ view }) => {
   return view.render('welcome')
 })
+Route.get('/about', async ({ view }) => {
+  return view.render('about')
+})
 Route.get('/password/forgot', 'passwordResetController.forgot').as('password.forgot').middleware('guest')
 Route.get('/password/reset/:token', 'passwordResetController.reset').as('password.reset').middleware('guest')
 
@@ -43,6 +46,7 @@ Route.group(() => {
   Route.delete('/scraper/:name', 'ScraperController.delScrapeJson').as('scraper.delJsonData').middleware(['auth', 'role:admin,customer'])
   Route.get('/logout', 'AuthController.logout').as('auth.logout').middleware('auth')
   Route.delete('/:id', 'UsersController.destroy').as('destroy').middleware(['auth', 'role:admin'])
+  Route.get('/users', 'UsersController.exportCsv').as('users.exportCsv').middleware(['auth', 'role:admin'])
   Route.patch('/:id/role', 'UsersController.mutateRole')
     .as('role')
     .middleware(['auth', 'role:admin'])
