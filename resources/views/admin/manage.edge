@@ -44,7 +44,7 @@
                                                     <div class="select">
                                                         <select name="roleId" onchange="this.form.submit()">
                                                         @each(role in roles)
-                                                            <option value="{{ role.id }}" {{ role.id === user.role_id ? "selected" : "" }}>
+                                                            <option value="{{ role.id }}" {{ role.id === user.roleId ? "selected" : "" }}>
                                                                 {{ role.role }}
                                                             </option>
                                                         @endeach
@@ -53,9 +53,9 @@
                                                 @end
                                             </td>
                                             <td>{{ user.email }}</td>
-                                            @set('date', new Date(user.created_at))
+                                            @set('date', new Date(user.createdAt))
                                             <td>{{ date.toDateString() }}</td>
-                                            <td>{{ user.is_email_verified }}</td>
+                                            <td>{{ user.isEmailVerified }}</td>
                                             <td>
                                                 @forms.delete({ action: route('destroy', { id: user.id }) })
                                                     <button class="button is-rounded is-warning" type="button" onclick="confirm('Are you sure?') && this.form.submit()">

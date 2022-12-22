@@ -1,11 +1,12 @@
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import { string } from "@ioc:Adonis/Core/Helpers"
 import User from './User'
+import AppBaseModel from './AppBaseModel'
 
 type TokenType = 'PASSWORD_RESET' | 'VERIFY_EMAIL'
 
-export default class Token extends BaseModel {
+export default class Token extends AppBaseModel {
   @column({ isPrimary: true })
   public id: number
 
