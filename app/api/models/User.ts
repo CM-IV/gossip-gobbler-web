@@ -3,7 +3,6 @@ import Hash from '@ioc:Adonis/Core/Hash'
 import {
   column,
   beforeSave,
-  BaseModel,
   computed,
   belongsTo,
   BelongsTo,
@@ -17,8 +16,9 @@ import Roles from '../enums/Role'
 import Profile from './Profile'
 import Token from './Token'
 import VerifyEmail from '../../Mailers/VerifyEmail'
+import AppBaseModel from './AppBaseModel'
 
-export default class User extends BaseModel {
+export default class User extends AppBaseModel {
   @column({ isPrimary: true })
   public id: string
 
