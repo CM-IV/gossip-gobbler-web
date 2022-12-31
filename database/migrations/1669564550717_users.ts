@@ -13,6 +13,8 @@ export default class extends BaseSchema {
         table.string('username', 75).notNullable().unique()
         table.string('email', 255).notNullable().unique()
         table.string('password', 180).notNullable()
+        table.string('current_challenge', 255).nullable()
+        table.string('devices').nullable()
         table.boolean('is_email_verified').notNullable().defaultTo(false)
 
         /**

@@ -1,6 +1,29 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
+import Env from '@ioc:Adonis/Core/Env'
 import User from '../models/User'
+
+import {
+  // Registration
+  generateRegistrationOptions,
+  verifyRegistrationResponse,
+  // Authentication
+  // generateAuthenticationOptions,
+  // verifyAuthenticationResponse,
+} from '@simplewebauthn/server'
+import type {
+  GenerateRegistrationOptionsOpts,
+  // GenerateAuthenticationOptionsOpts,
+  VerifyRegistrationResponseOpts,
+  // VerifyAuthenticationResponseOpts,
+  VerifiedRegistrationResponse,
+  // VerifiedAuthenticationResponse,
+} from '@simplewebauthn/server'
+import type {
+  RegistrationCredentialJSON,
+  // AuthenticationCredentialJSON,
+  AuthenticatorDevice,
+} from '@simplewebauthn/typescript-types'
 
 export default class AuthController {
   public async register({ request, response, session }: HttpContextContract) {
@@ -67,5 +90,74 @@ export default class AuthController {
     await auth.logout()
 
     return response.redirect('/')
+  }
+
+  //WebAuthN functions//
+
+  //Registration - Generate Registration Options
+  public async registrationOptions({ auth, response }: HttpContextContract) {
+    const userName = auth.user?.username as string
+    const userID = auth.user?.id as string
+    // const userAuthenticators = auth.user?.devices as AuthenticatorDevice[]
+    const opts: GenerateRegistrationOptionsOpts = {
+      rpName: Env.get('RP_NAME'),
+      rpID: Env.get('RP_ID'),
+      userID,
+      userName,
+      attestationType: 'none',
+      supportedAlgorithmIDs: [-7, -257]
+    }
+
+    const options = generateRegistrationOptions(opts)
+
+    auth.user!.currentChallenge = options.challenge
+
+    return response.json(options)
+    
+  }
+
+  //Registration - Verify Registration Response
+  public async registrationResponse({ auth, request, response }: HttpContextContract) {
+    const body = request.body() as RegistrationCredentialJSON
+    const expectedChallenge = auth.user?.currentChallenge as string
+
+    let verification: VerifiedRegistrationResponse
+
+    try {
+      const opts: VerifyRegistrationResponseOpts = {
+        credential: body,
+        expectedChallenge,
+        expectedOrigin: Env.get('RP_ORIGIN'),
+        expectedRPID: Env.get('RP_ID'),
+        requireUserVerification: true
+      }
+
+      verification = await verifyRegistrationResponse(opts)
+    } catch (error) {
+      return response.status(400).send({ error: error.message })
+    }
+
+    const { verified, registrationInfo } = verification
+
+    if (verified && registrationInfo) {
+      const { credentialPublicKey, credentialID, counter } = registrationInfo
+
+      const existingDevice = auth.user?.devices.find((device) => device.credentialID.equals(credentialID))
+
+      if (!existingDevice) {
+
+        const newDevice: AuthenticatorDevice = {
+          credentialPublicKey,
+          credentialID,
+          counter,
+          transports: body.transports
+        }
+
+        //Does this work?
+        auth.user?.devices.push(newDevice)
+      }
+    }
+
+    return response.send({ verified })
   }
 }

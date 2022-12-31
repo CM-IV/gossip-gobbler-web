@@ -36,6 +36,8 @@ Route.get('/login', async ({ view }) => {
 
 //API ROUTES
 Route.group(() => {
+  Route.get('/generate-registration-options', 'AuthController.registrationOptions').as('webauthn.register').middleware('guest')
+  Route.post('/verify-registration', 'AuthController.registrationResponse').as('webauthn.verify')
   Route.post('/password/send', 'passwordResetController.send').as('password.send').middleware('guest')
   Route.post('/password/store', 'passwordResetController.store').as('password.store').middleware('guest')
   Route.post('/register', 'AuthController.register').as('auth.register').middleware('guest')

@@ -18,6 +18,8 @@ import Token from './Token'
 import VerifyEmail from '../../Mailers/VerifyEmail'
 import AppBaseModel from './AppBaseModel'
 
+import type { AuthenticatorDevice } from '@simplewebauthn/typescript-types';
+
 export default class User extends AppBaseModel {
   @column({ isPrimary: true })
   public id: string
@@ -33,6 +35,12 @@ export default class User extends AppBaseModel {
 
   @column({ serializeAs: null })
   public password: string
+
+  @column()
+  public devices: AuthenticatorDevice[]
+
+  @column()
+  public currentChallenge: string | null
 
   @column()
   public rememberMeToken: string | null

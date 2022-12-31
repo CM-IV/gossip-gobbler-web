@@ -26,6 +26,12 @@
                     <label class="label">Date Joined</label>
                     <p>{{ date.toDateString() }}</p>
                 </div>
+                <div class="field">
+                    <label class="label">WebAuthN 2FA</label>
+                    <button class="button" id="btnBegin">
+                        Enable
+                    </button>
+                </div>
                 @if(profile.bio)
                 <div class="field">
                     <label class="label">Bio</label>
@@ -48,3 +54,24 @@
         </article>
     </div>
 </div>
+
+@section('scripts')
+  <script>
+    const { startRegistration } = SimpleWebAuthnBrowser
+
+    const elemBegin = document.getElementById('btnBegin')
+
+    elemBegin.addEventListener('click', async () => {
+        const resp = await fetch('/api/generate-registration-options')
+
+        // let attResp
+
+        try {
+            console.log(resp)
+        } catch (error) {
+            console.error(error)
+            throw error
+        }
+    })
+  </script>
+@end
