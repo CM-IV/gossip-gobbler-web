@@ -94,7 +94,7 @@ export default class ScraperController {
         
                 return response.redirect().back()
             } else {
-                $("div.mw-body").each((_i, el) => {
+                $("#content").each((_i, el) => {
 
                     const title = $(el).find("h1.firstHeading").text();
                     const text = $(el).find("p").text().trim();
