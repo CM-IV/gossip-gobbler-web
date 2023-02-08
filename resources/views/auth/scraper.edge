@@ -22,17 +22,20 @@
                     <div id="notify" class="notification is-danger">
                       <button class="delete" onclick="this.parentNode.style.display='none'"></button>
                       <p>There was an error!</p>
+                      <p>Make sure you include a trailing "/" at the end of the URL</p>
                     </div>
                   @end
                   @if(flashMessages.has('errors.scrapeUrl'))
                     <div id="notify" class="notification is-danger">
                       <button class="delete" onclick="this.parentNode.style.display='none'"></button>
                       <p><strong>{{ flashMessages.get('errors.scrapeUrl') }}</strong></p>
+                      <p>Make sure you include a trailing "/" at the end of the URL</p>
                       <p>Here are some example URLs to scrape:</p>
                       <pre>
                         <code>https://old.reddit.com/r/Monero/</code>
-                        <code>https://dev.to/top/year</code>
-                        <code>https://en.wikipedia.org/wiki/Ryzen</code>
+                        <code>https://dev.to/top/year/</code>
+                        <code>https://en.wikipedia.org/wiki/Ryzen/</code>
+                        <code>https://www.businessinsider.com/sai/</code>
                       </pre>
                     </div>
                   @end
