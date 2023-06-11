@@ -6,7 +6,7 @@ export default class ScraperService {
     public async scrapeReddit(scrapeUrl: string, scrapeName: string) {
 
         const res = await axios.get(scrapeUrl)
-        const posts = [] as any[];
+        const posts = [] as any[]
 
         const $ = cheerio.load(res.data)
 
@@ -18,11 +18,11 @@ export default class ScraperService {
             })
         })
 
+        console.log(JSON.stringify(posts, null, 2));
+
         await redditData.put(scrapeName.replace(/ /g,"-"),
             { 
-                data: JSON.stringify(posts, null, 2)
-                    .replace(/'/g, "\\'")
-                    .replace(/[\u0000-\u0019]+/g,""),
+                data: JSON.stringify(posts),
                 contentType: 'application/json' 
             })
         
@@ -58,9 +58,7 @@ export default class ScraperService {
 
         await redditData.put(scrapeName.replace(/ /g,"-"),
             { 
-                data: JSON.stringify(posts, null, 2)
-                    .replace(/'/g, "\\'")
-                    .replace(/[\u0000-\u0019]+/g,""),
+                data: JSON.stringify(posts),
                 contentType: 'application/json' 
             })
     }
@@ -84,9 +82,7 @@ export default class ScraperService {
 
         await redditData.put(scrapeName.replace(/ /g,"-"),
             { 
-                data: JSON.stringify(posts, null, 2)
-                    .replace(/'/g, "\\'")
-                    .replace(/[\u0000-\u0019]+/g,""),
+                data: JSON.stringify(posts),
                 contentType: 'application/json' 
             })
     }
@@ -110,9 +106,7 @@ export default class ScraperService {
 
         await redditData.put(scrapeName.replace(/ /g,"-"),
             { 
-                data: JSON.stringify(posts, null, 2)
-                    .replace(/'/g, "\\'")
-                    .replace(/[\u0000-\u0019]+/g,""),
+                data: JSON.stringify(posts),
                 contentType: 'application/json' 
             })
     }

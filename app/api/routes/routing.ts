@@ -7,9 +7,9 @@
 | for majority of projects, however you can define routes in different
 | files and just make sure to import them inside this file.
 */
-
 import Route from '@ioc:Adonis/Core/Route'
 import HealthCheck from '@ioc:Adonis/Core/HealthCheck'
+
 
 Route.get('/', async ({ view }) => {
   return view.render('welcome')
