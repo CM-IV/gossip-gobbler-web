@@ -1,6 +1,7 @@
 import * as cheerio from 'cheerio';
 import axios from 'axios';
 import { redditData } from '../deta/init'
+import Papa from 'papaparse';
 
 export default class ScraperService {
     public async scrapeReddit(scrapeUrl: string, scrapeName: string) {
@@ -25,10 +26,12 @@ export default class ScraperService {
             })
         })
 
+        let csv = Papa.unparse(posts);
+
         await redditData.put(scrapeName.replace(/ /g,"-"),
             { 
-                data: JSON.stringify(posts),
-                contentType: 'application/json' 
+                data: csv,
+                contentType: 'text/csv' 
             })
         
     }
@@ -61,10 +64,12 @@ export default class ScraperService {
             })
         })
 
+        let csv = Papa.unparse(posts);
+
         await redditData.put(scrapeName.replace(/ /g,"-"),
             { 
-                data: JSON.stringify(posts),
-                contentType: 'application/json' 
+                data: csv,
+                contentType: 'text/csv' 
             })
     }
 
@@ -85,10 +90,12 @@ export default class ScraperService {
             })
         })
 
+        let csv = Papa.unparse(posts);
+
         await redditData.put(scrapeName.replace(/ /g,"-"),
             { 
-                data: JSON.stringify(posts),
-                contentType: 'application/json' 
+                data: csv,
+                contentType: 'text/csv' 
             })
     }
 
@@ -109,10 +116,12 @@ export default class ScraperService {
 
         })
 
+        let csv = Papa.unparse(posts);
+
         await redditData.put(scrapeName.replace(/ /g,"-"),
             { 
-                data: JSON.stringify(posts),
-                contentType: 'application/json' 
+                data: csv,
+                contentType: 'text/csv' 
             })
     }
 }

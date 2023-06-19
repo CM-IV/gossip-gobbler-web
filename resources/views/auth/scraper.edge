@@ -50,7 +50,7 @@
                   <br/>
 
                   @if(filteredFiles.length > 0)
-                    @!displayJson({ filteredFiles: filteredFiles })
+                    @!displayCsv({ filteredFiles: filteredFiles })
                   @end
                 </div>
               </div>
@@ -80,7 +80,7 @@
                 <br/>
 
                 @if(filteredFiles.length > 0 && auth.user?.isCustomer)
-                  @!displayJson({ filteredFiles: filteredFiles })
+                  @!displayCsv({ filteredFiles: filteredFiles })
                 @end
               </div>
             </div>

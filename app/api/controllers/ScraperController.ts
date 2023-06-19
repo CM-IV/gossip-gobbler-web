@@ -26,7 +26,7 @@ export default class ScraperController {
         const { fileName, scrapeUrl, selection } = await request.validate({ schema: scrapeSchema })
 
         const username = auth.user!.username
-        const scrapeName = `${fileName}-${username}.json`
+        const scrapeName = `${fileName}-${username}.csv`
 
         try {
 
@@ -74,17 +74,17 @@ export default class ScraperController {
         
     }
 
-    public async getScrapeJson({ params, response }: HttpContextContract) {
+    public async getScrapeCsv({ params, response }: HttpContextContract) {
         const fileName = params.name
 
         const blob = await redditData.get(fileName) as Blob
 
-        const jsonData = await blob.text()
+        const csvData = await blob.text()
 
-        return response.send(JSON.stringify(jsonData))
+        return response.send(csvData)
     }
 
-    public async delScrapeJson({ params, response, session }: HttpContextContract) {
+    public async delScrapeCsv({ params, response, session }: HttpContextContract) {
         const fileName = params.name
 
         await redditData.delete(fileName)
