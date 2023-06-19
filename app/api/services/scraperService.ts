@@ -11,14 +11,19 @@ export default class ScraperService {
         const $ = cheerio.load(res.data)
 
         $("div.thing").each((_i, el) => {
+
+            let votes = $(el).children().find("div.unvoted").text()
+
+            if (votes.includes("•")) {
+                votes = "0"
+            }
+
             posts.push({
                 title: $(el).children().find("a.title").text(),
                 author: $(el).children().find("a.author").text(),
-                votes: $(el).children().find("div.unvoted").text(),
+                votes: votes,
             })
         })
-
-        console.log(JSON.stringify(posts, null, 2));
 
         await redditData.put(scrapeName.replace(/ /g,"-"),
             { 
